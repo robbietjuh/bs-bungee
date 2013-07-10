@@ -1,0 +1,9 @@
+name: bs-servers
+main: net.robbytu.banjoserver.bungee.Main
+version: ${version}
+depend: ['BungeeYAML']
+commands:
+    server:
+        description: Switch servers
+        permission:
+        usage: /server [name]
