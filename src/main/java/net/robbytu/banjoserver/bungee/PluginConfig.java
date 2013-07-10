@@ -25,4 +25,6 @@ public class PluginConfig extends Config {
     public String db_username = "minecraft";
     public String db_password = "";
     public String db_database = "minecraft";
+
+    public int warns_banAt = 3;
 }

@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.bans.Bans;
 
 public class WarnsCommand extends Command {
     private final String usage = "/warns [user/add [user] [warn ...]/remove [id]]";
@@ -61,10 +62,15 @@ public class WarnsCommand extends Command {
             sender.sendMessage(ChatColor.GREEN + "Warn was added.");
             sender.sendMessage("");
             this.renderWarnEntry(sender, warn);
+
+            if(Warns.getUserWarns(args[1]).length >= Main.config.warns_banAt) {
+                sender.sendMessage(ChatColor.GOLD + "Player got automatically banned because it has " + Main.config.warns_banAt + " warns or more.");
+                Bans.BanUser(args[1], Main.config.warns_banAt + " warns, waaronder: " + warn.warn);
+            }
         }
 
         if(args.length == 2 && args[0].equalsIgnoreCase("remove")) {
-            // Remvoe a user warn
+            // Remove a user warn
             if(!sender.hasPermission("bs.admin")) {
                 this.failCommand(sender, "You do not have permission to execute this command.");
                 return;
