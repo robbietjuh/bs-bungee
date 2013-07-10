@@ -12,8 +12,9 @@ public class Warns {
 
         try {
             // Create a new select statement
-            Statement select = conn.createStatement();
-            ResultSet result = select.executeQuery("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username = '" + username + "'");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username = ?");
+            statement.setString(1, username);
+            ResultSet result = statement.executeQuery();
 
             // For each warn ...
             while(result.next()) {
