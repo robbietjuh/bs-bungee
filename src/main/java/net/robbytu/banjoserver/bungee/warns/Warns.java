@@ -15,9 +15,9 @@ public class Warns {
             Statement select = conn.createStatement();
             ResultSet result = select.executeQuery("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username = '" + username + "'");
 
-            // For each server ...
+            // For each warn ...
             while(result.next()) {
-                // Create a new Server instance
+                // Create a new Warn instance
                 Warn warn = new Warn();
 
                 // Fill in properties
@@ -28,7 +28,7 @@ public class Warns {
                 warn.date = result.getInt(5);
                 warn.server = result.getString(6);
 
-                // Add server to return array
+                // Add warn to return array
                 warns.add(warn);
             }
         }
@@ -36,7 +36,7 @@ public class Warns {
             e.printStackTrace();
         }
 
-        // Return the array of servers
+        // Return the array of warns
         return warns.toArray(new Warn[warns.size()]);
     }
 
@@ -51,6 +51,51 @@ public class Warns {
             statement.setString(3, warn.warn);
             statement.setInt(4, warn.date);
             statement.setString(5, warn.server);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Warn getWarnById(int id) {
+        // Get warn by ID
+        try {
+            Connection conn = Main.conn;
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE id = ?");
+
+            statement.setInt(1, id);
+
+            ResultSet result = statement.executeQuery();
+            if(result.next()) {
+                // Create a new Warn instance
+                Warn warn = new Warn();
+
+                // Fill in properties
+                warn.id = result.getInt(1);
+                warn.username = result.getString(2);
+                warn.mod = result.getString(3);
+                warn.warn = result.getString(4);
+                warn.date = result.getInt(5);
+                warn.server = result.getString(6);
+
+                return warn;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static void removeWarnById(int id) {
+        try {
+            Connection conn = Main.conn;
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM bs_warns WHERE id = ?");
+
+            statement.setInt(1, id);
 
             statement.executeUpdate();
         }

@@ -62,6 +62,24 @@ public class WarnsCommand extends Command {
             sender.sendMessage("");
             this.renderWarnEntry(sender, warn);
         }
+
+        if(args.length == 2 && args[0].equalsIgnoreCase("remove")) {
+            // Remvoe a user warn
+            if(!sender.hasPermission("bs.admin")) {
+                this.failCommand(sender, "You do not have permission to execute this command.");
+                return;
+            }
+
+            Warn warn = Warns.getWarnById(Integer.getInteger(args[1]));
+            if(warn != null) {
+                this.renderWarnEntry(sender, warn);
+                Warns.removeWarnById(Integer.getInteger(args[1]));
+                sender.sendMessage(ChatColor.GREEN + "Warn has been removed.");
+            }
+            else {
+                this.failCommand(sender, "Specified warn does not exist.");
+            }
+        }
     }
 
     private void failCommand(CommandSender sender, String message) {
