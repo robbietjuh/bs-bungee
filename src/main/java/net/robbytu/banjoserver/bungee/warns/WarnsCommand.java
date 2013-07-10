@@ -28,7 +28,7 @@ public class WarnsCommand extends Command {
             }
         }
 
-        if(args.length > 3 && args[0] == "add") {
+        if(args.length > 3 && args[0].equalsIgnoreCase("add")) {
             // Add a user warn
             if(!sender.hasPermission("bs.admin")) {
                 this.failCommand(sender, "You do not have permission to execute this command.");
