@@ -1,7 +1,9 @@
 package net.robbytu.banjoserver.bungee;
 
 import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationException;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -32,7 +34,7 @@ public class Main extends Plugin {
     }
 
     private void registerCommands() {
-        // Todo
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarnsCommand());
     }
 
     public void onDisable() {
