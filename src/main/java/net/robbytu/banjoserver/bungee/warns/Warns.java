@@ -2,10 +2,7 @@ package net.robbytu.banjoserver.bungee.warns;
 
 import net.robbytu.banjoserver.bungee.Main;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class Warns {
@@ -41,5 +38,24 @@ public class Warns {
 
         // Return the array of servers
         return warns.toArray(new Warn[warns.size()]);
+    }
+
+    public static void addUserWarn(Warn warn) {
+        // Insert User warn
+        try {
+            Connection conn = Main.conn;
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_warns (user, mod, warn, date, server) VALUES (?, ?, ?, ?, ?)");
+
+            statement.setString(1, warn.username);
+            statement.setString(2, warn.mod);
+            statement.setString(3, warn.warn);
+            statement.setInt(4, warn.date);
+            statement.setString(5, warn.server);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
