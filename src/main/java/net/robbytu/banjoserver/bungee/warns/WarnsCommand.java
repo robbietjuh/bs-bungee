@@ -65,7 +65,7 @@ public class WarnsCommand extends Command {
 
             if(Warns.getUserWarns(args[1]).length >= Main.config.warns_banAt) {
                 sender.sendMessage(ChatColor.GOLD + "Player got automatically banned because it has " + Main.config.warns_banAt + " warns or more.");
-                Bans.BanUser(args[1], Main.config.warns_banAt + " warns, waaronder: " + warn.warn);
+                Bans.banUser(args[1], "Systeem", Main.config.warns_banAt + " warns, waaronder: " + warn.warn);
             }
         }
 
