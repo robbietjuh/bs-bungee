@@ -30,8 +30,8 @@ public class Bans {
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
                 if(player.hasPermission("bs.admin")) {
                     player.sendMessage("");
-                    player.sendMessage(ChatColor.GOLD + ban.mod + " heeft " + ban.username + " gebanned:");
-                    player.sendMessage(ChatColor.GOLD + " * " + ban.reason);
+                    player.sendMessage(ChatColor.RED + ban.mod + " heeft " + ban.username + " gebanned:");
+                    player.sendMessage(ChatColor.RED + " * " + ban.reason);
                     player.sendMessage("");
                 }
             }

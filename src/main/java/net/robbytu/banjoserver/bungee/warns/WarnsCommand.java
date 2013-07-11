@@ -58,11 +58,6 @@ public class WarnsCommand extends Command {
             Main.instance.getProxy().getPlayer(args[2]).sendMessage("");
             this.renderWarnEntry(Main.instance.getProxy().getPlayer(args[2]), warn);
 
-            sender.sendMessage("");
-            sender.sendMessage(ChatColor.GREEN + "Warn was added.");
-            sender.sendMessage("");
-            this.renderWarnEntry(sender, warn);
-
             if(Warns.getUserWarns(args[1]).length >= Main.config.warns_banAt) {
                 sender.sendMessage(ChatColor.GOLD + "Player got automatically banned because it has " + Main.config.warns_banAt + " warns or more.");
 

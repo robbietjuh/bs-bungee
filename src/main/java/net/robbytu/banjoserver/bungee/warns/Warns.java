@@ -1,5 +1,7 @@
 package net.robbytu.banjoserver.bungee.warns;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
 
 import java.sql.*;
@@ -54,6 +56,15 @@ public class Warns {
             statement.setString(5, warn.server);
 
             statement.executeUpdate();
+
+            for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+                if(player.hasPermission("bs.admin")) {
+                    player.sendMessage("");
+                    player.sendMessage(ChatColor.GOLD + warn.mod + " heeft " + warn.username + " een warn gegeven in " + warn.server + ":");
+                    player.sendMessage(ChatColor.GOLD + " * " + warn.warn);
+                    player.sendMessage("");
+                }
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
