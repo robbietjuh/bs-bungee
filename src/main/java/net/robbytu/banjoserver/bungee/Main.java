@@ -5,6 +5,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.bans.BanCommand;
 import net.robbytu.banjoserver.bungee.bans.BanLoginListener;
+import net.robbytu.banjoserver.bungee.bans.IPBanCommand;
 import net.robbytu.banjoserver.bungee.bans.TempBanCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
