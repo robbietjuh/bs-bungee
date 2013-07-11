@@ -8,6 +8,7 @@ import net.md_5.bungee.api.plugin.Listener;
 public class BanLoginListener implements Listener {
     @Subscribe
     public void login(LoginEvent event) {
+        // User bans
         Ban[] bans = Bans.getUserBans(event.getConnection().getName(), true);
         for(Ban ban : bans) {
             if(!ban.isTempban()) {
@@ -25,6 +26,16 @@ public class BanLoginListener implements Listener {
                     ban.active = false;
                     Bans.updateUserBan(ban);
                 }
+            }
+        }
+
+        // IP bans
+        Ban[] ipbans = Bans.getUserBans(event.getConnection().getAddress().getAddress().toString(), true);
+        for(Ban ban : ipbans) {
+            if(!ban.isTempban()) {
+                event.setCancelReason(ChatColor.RED + "" + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+                event.setCancelled(true);
+                return;
             }
         }
     }
