@@ -55,7 +55,7 @@ public class WarnsCommand extends Command {
             }
 
             String warnBody = "";
-            for (int i = 1; i < args.length - 2; i++) warnBody += args[i];
+            for (int i = 2; i < args.length - 2; i++) warnBody += args[i];
 
             Warn warn = new Warn();
             warn.mod = sender.getName();
