@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.bans.Ban;
 import net.robbytu.banjoserver.bungee.bans.Bans;
 
 public class WarnsCommand extends Command {
@@ -64,7 +65,13 @@ public class WarnsCommand extends Command {
 
             if(Warns.getUserWarns(args[1]).length >= Main.config.warns_banAt) {
                 sender.sendMessage(ChatColor.GOLD + "Player got automatically banned because it has " + Main.config.warns_banAt + " warns or more.");
-                Bans.banUser(args[1], "Systeem", Main.config.warns_banAt + " warns, waaronder: " + warn.warn);
+
+                Ban ban = new Ban();
+                ban.username = args[1];
+                ban.mod = "Systeem";
+                ban.reason = Main.config.warns_banAt + " warns, waaronder: " + warn.warn;
+
+                Bans.banUser(ban);
             }
         }
 
