@@ -20,6 +20,10 @@ public class Bans {
             statement.setString(5, ban.server);
 
             statement.executeUpdate();
+
+            if(Main.instance.getProxy().getPlayer(ban.username) != null) {
+                Main.instance.getProxy().getPlayer(ban.username).disconnect(ban.reason + "\n\nJe kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+            }
         }
         catch (SQLException e) {
             e.printStackTrace();
