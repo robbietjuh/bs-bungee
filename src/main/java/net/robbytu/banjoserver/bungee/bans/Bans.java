@@ -24,7 +24,7 @@ public class Bans {
             statement.executeUpdate();
 
             if(Main.instance.getProxy().getPlayer(ban.username) != null) {
-                Main.instance.getProxy().getPlayer(ban.username).disconnect(ban.reason + "\n\nJe kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+                Main.instance.getProxy().getPlayer(ban.username).disconnect(ChatColor.RED + "" + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
             }
 
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
