@@ -35,6 +35,7 @@ public class WarnsCommand extends Command {
                 sender.sendMessage(" --");
                 sender.sendMessage(" ");
             }
+
             for(Ban ban : bans) {
                sender.sendMessage(" ");
                this.renderBanEntry(sender, ban);
@@ -54,7 +55,7 @@ public class WarnsCommand extends Command {
             }
 
             String warnBody = "";
-            for (int i = 0; i < args.length - 2; i++) warnBody += args[i];
+            for (int i = 1; i < args.length - 2; i++) warnBody += args[i];
 
             Warn warn = new Warn();
             warn.mod = sender.getName();
