@@ -22,11 +22,22 @@ public class WarnsCommand extends Command {
             if(args.length == 1) user = args[1];
 
             Warn[] warns = Warns.getUserWarns(user);
-            sender.sendMessage(ChatColor.AQUA + sender.getName() + " heeft " + warns.length + " warns.");
+            Ban[] bans = Bans.getUserBans(user, false);
+            sender.sendMessage(ChatColor.GOLD + user + " heeft " + warns.length + " warns en is " + bans.length + " keer gebanned.");
 
             for(Warn warn : warns) {
                 sender.sendMessage(" ");
                 this.renderWarnEntry(sender, warn);
+            }
+
+            if(bans.length > 0) {
+                sender.sendMessage(" ");
+                sender.sendMessage(" --");
+                sender.sendMessage(" ");
+            }
+            for(Ban ban : bans) {
+               sender.sendMessage(" ");
+               this.renderBanEntry(sender, ban);
             }
         }
 
@@ -95,9 +106,17 @@ public class WarnsCommand extends Command {
     }
 
     private void renderWarnEntry(CommandSender sender, Warn warn) {
-        sender.sendMessage(ChatColor.AQUA + ((warn.id != 0) ? ("#" + warn.id) : "") + " " + warn.warn);
+        sender.sendMessage(ChatColor.AQUA + "Warn " + ((warn.id != 0) ? ("#" + warn.id) : "") + " " + warn.warn);
         sender.sendMessage(ChatColor.GRAY + " - Datum:  " + warn.getFriendlyDate());
         sender.sendMessage(ChatColor.GRAY + " - Admin:  " + warn.mod);
         sender.sendMessage(ChatColor.GRAY + " - Server: " + warn.server);
+    }
+
+    private void renderBanEntry(CommandSender sender, Ban ban) {
+        sender.sendMessage(ChatColor.AQUA + "Ban " + ((ban.id != 0) ? ("#" + ban.id) : "") + " " + ban.reason);
+        sender.sendMessage(ChatColor.GRAY + " - Datum:  " + ban.getFriendlyDate());
+        sender.sendMessage(ChatColor.GRAY + " - Admin:  " + ban.mod);
+        sender.sendMessage(ChatColor.GRAY + " - Actief: " + ((ban.active) ? ChatColor.BOLD + "Ja" : "Nee"));
+        if(ban.isTempban()) sender.sendMessage(ChatColor.GRAY + " - Tempban: Ja, " + ban.tempban + " sec.");
     }
 }
