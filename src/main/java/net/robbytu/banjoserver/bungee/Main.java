@@ -7,6 +7,7 @@ import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
+import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -59,6 +60,7 @@ public class Main extends Plugin {
 
     private void registerListeners() {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new LoginListener());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new PluginMessageListener());
     }
 
     private void registerSchedulers() {
