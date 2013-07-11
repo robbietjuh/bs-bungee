@@ -23,9 +23,7 @@ public class Bans {
 
             statement.executeUpdate();
 
-            if(Main.instance.getProxy().getPlayer(ban.username) != null) {
-                Main.instance.getProxy().getPlayer(ban.username).disconnect(ChatColor.RED + "" + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
-            }
+            kickBannedPlayer(ban);
 
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
                 if(player.hasPermission("bs.admin")) {
@@ -38,6 +36,17 @@ public class Bans {
         }
         catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void kickBannedPlayer(Ban ban) {
+        if(Main.instance.getProxy().getPlayer(ban.username) != null) {
+            if(ban.isTempban()) {
+                Main.instance.getProxy().getPlayer(ban.username).disconnect("Je bent tijdelijk gebanned voor " + ban.tempban + " sec:\n\n" + ChatColor.RED + ban.reason);
+            }
+            else {
+                Main.instance.getProxy().getPlayer(ban.username).disconnect(ChatColor.RED + "" + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+            }
         }
     }
 }
