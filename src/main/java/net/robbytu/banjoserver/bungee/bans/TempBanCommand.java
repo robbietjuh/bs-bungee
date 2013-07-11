@@ -30,7 +30,7 @@ public class TempBanCommand extends Command {
         ban.username = args[0];
         ban.reason = reasonBody;
         ban.mod = sender.getName();
-        ban.tempban = Integer.getInteger(args[1]);
+        ban.tempban = ban.date + Integer.getInteger(args[1]);
 
         Bans.banUser(ban);
     }
