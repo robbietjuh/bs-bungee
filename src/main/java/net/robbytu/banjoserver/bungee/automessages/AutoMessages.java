@@ -20,7 +20,7 @@ public class AutoMessages {
         }
 
         String message = broadcasts[currentBroadcast];
-        Main.instance.getProxy().broadcast(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "*" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_AQUA + message);
+        Main.instance.getProxy().broadcast(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "*" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_AQUA + ChatColor.translateAlternateColorCodes("&".charAt(0), message));
 
         currentBroadcast++;
     }
