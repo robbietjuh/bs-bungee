@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
+import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -41,6 +42,9 @@ public class Main extends Plugin {
 
         getLogger().info("Registering scheduled tasks...");
         this.registerSchedulers();
+
+        getLogger().info("Registering for plugin channels...");
+        this.registerChannels();
     }
 
     private void registerCommands() {
@@ -54,11 +58,15 @@ public class Main extends Plugin {
     }
 
     private void registerListeners() {
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new BanLoginListener());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new LoginListener());
     }
 
     private void registerSchedulers() {
         ProxyServer.getInstance().getScheduler().schedule(this, new BroadcastTask(), 300, TimeUnit.SECONDS);
+    }
+
+    private void registerChannels() {
+        ProxyServer.getInstance().registerChannel("BSBungee");
     }
 
     public void onDisable() {

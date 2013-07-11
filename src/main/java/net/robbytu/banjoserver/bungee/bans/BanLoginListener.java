@@ -1,13 +1,10 @@
 package net.robbytu.banjoserver.bungee.bans;
 
-import com.google.common.eventbus.Subscribe;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.event.LoginEvent;
-import net.md_5.bungee.api.plugin.Listener;
 
-public class BanLoginListener implements Listener {
-    @Subscribe
-    public void login(LoginEvent event) {
+public class BanLoginListener {
+    public static void handle(LoginEvent event) {
         // User bans
         Ban[] bans = Bans.getUserBans(event.getConnection().getName(), true);
         for(Ban ban : bans) {
