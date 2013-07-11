@@ -1,4 +1,4 @@
 name: bungee
 main: net.robbytu.banjoserver.bungee.Main
 version: ${version}
-depend: ['BungeeYAML']
+depends: ['BungeeYAML']
