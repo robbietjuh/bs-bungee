@@ -33,7 +33,7 @@ public class BanLoginListener implements Listener {
         Ban[] ipbans = Bans.getUserBans(event.getConnection().getAddress().getAddress().toString(), true);
         for(Ban ban : ipbans) {
             if(!ban.isTempban()) {
-                event.setCancelReason(ChatColor.RED + "" + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+                event.setCancelReason(ChatColor.RED + "IP ban: " + ChatColor.BOLD + ban.reason + "\n\n" + ChatColor.RESET + "Je kan een Ban Appeal maken op onze website: www.banjoserver.nl");
                 event.setCancelled(true);
                 return;
             }
