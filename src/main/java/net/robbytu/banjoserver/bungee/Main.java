@@ -16,8 +16,8 @@ public class Main extends Plugin {
     public static Connection conn;
 
     public void onLoad() {
-        this.instance = this;
-        this.config = new PluginConfig(this);
+        instance = this;
+        config = new PluginConfig(this);
     }
 
     public void onEnable() {
@@ -41,7 +41,7 @@ public class Main extends Plugin {
 
     public void onDisable() {
         try {
-            this.config.save();
+            config.save();
             getLogger().info("Saved configuration.");
         } catch (InvalidConfigurationException e) {
             getLogger().warning("Could not save configuration file to disk.");
