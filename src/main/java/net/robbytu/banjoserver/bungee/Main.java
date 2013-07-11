@@ -6,6 +6,7 @@ import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.bans.BanCommand;
 import net.robbytu.banjoserver.bungee.bans.BanLoginListener;
 import net.robbytu.banjoserver.bungee.bans.TempBanCommand;
+import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -43,6 +44,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarnsCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TempBanCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand());
     }
 
     private void registerListeners() {
