@@ -3,7 +3,6 @@ package net.robbytu.banjoserver.bungee.bans;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
-import net.robbytu.banjoserver.bungee.warns.Warn;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
