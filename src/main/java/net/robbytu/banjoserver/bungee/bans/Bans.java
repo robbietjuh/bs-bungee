@@ -36,6 +36,8 @@ public class Bans {
                     player.sendMessage("");
                 }
             }
+
+            Main.instance.getLogger().info("User " + ban.username + " got banned by " + ban.mod + ": " + ban.reason);
         }
         catch (SQLException e) {
             e.printStackTrace();

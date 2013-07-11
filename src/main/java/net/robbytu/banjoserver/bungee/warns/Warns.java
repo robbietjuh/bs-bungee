@@ -65,6 +65,8 @@ public class Warns {
                     player.sendMessage("");
                 }
             }
+
+            Main.instance.getLogger().info("User " + warn.username + " got warned by " + warn.mod + ": " + warn.warn);
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -110,6 +112,8 @@ public class Warns {
             statement.setInt(1, id);
 
             statement.executeUpdate();
+
+            Main.instance.getLogger().info("Warn #" + id + " got removed");
         }
         catch (SQLException e) {
             e.printStackTrace();

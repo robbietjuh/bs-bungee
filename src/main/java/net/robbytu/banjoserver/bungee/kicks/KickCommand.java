@@ -43,6 +43,8 @@ public class KickCommand extends Command {
                 player.sendMessage("");
             }
         }
+
+        Main.instance.getLogger().info("User " + args[0] + " got kicked by " + sender.getName() + ": " + reasonBody);
     }
 
     private void failCommand(CommandSender sender, String message) {
