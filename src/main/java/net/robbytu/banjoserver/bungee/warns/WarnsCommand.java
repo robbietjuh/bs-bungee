@@ -46,7 +46,6 @@ public class WarnsCommand extends Command {
 
             Warn warn = new Warn();
             warn.mod = sender.getName();
-            warn.date = (int) (System.currentTimeMillis() / 1000L);
             warn.server = Main.instance.getProxy().getPlayer(args[1]).getServer().getInfo().getName();
             warn.username = Main.instance.getProxy().getPlayer(args[2]).getDisplayName();
             warn.warn = warnBody;

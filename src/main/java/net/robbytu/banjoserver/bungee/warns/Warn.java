@@ -11,6 +11,11 @@ public class Warn {
     public int date;
     public String server;
 
+    public Warn() {
+        this.id = 0;
+        this.date = (int) (System.currentTimeMillis() / 1000L);
+    }
+
     public String getFriendlyDate() {
         Date time = new Date((long) this.date * 1000);
         return new SimpleDateFormat("dd-MM-yyy").format(time);
