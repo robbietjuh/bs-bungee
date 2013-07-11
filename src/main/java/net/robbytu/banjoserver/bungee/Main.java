@@ -45,6 +45,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TempBanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPBanCommand());
     }
 
     private void registerListeners() {
