@@ -1,5 +1,7 @@
 package net.robbytu.banjoserver.bungee.bans;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
 
 import java.sql.Connection;
@@ -23,6 +25,13 @@ public class Bans {
 
             if(Main.instance.getProxy().getPlayer(ban.username) != null) {
                 Main.instance.getProxy().getPlayer(ban.username).disconnect(ban.reason + "\n\nJe kan een Ban Appeal maken op onze website: www.banjoserver.nl");
+            }
+
+            for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+                if(player.hasPermission("bs.admin")) {
+                    player.sendMessage(ChatColor.GOLD + ban.mod + " heeft " + ban.username + " gebanned:");
+                    player.sendMessage(ChatColor.GOLD + " * " + ban.reason);
+                }
             }
         }
         catch (SQLException e) {

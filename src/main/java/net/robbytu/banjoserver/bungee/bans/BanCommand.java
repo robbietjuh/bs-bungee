@@ -32,8 +32,6 @@ public class BanCommand extends Command {
         ban.mod = sender.getName();
 
         Bans.banUser(ban);
-
-        sender.sendMessage(ChatColor.GREEN + args[0] + " is gebanned.");
     }
 
     private void failCommand(CommandSender sender, String message) {
