@@ -4,6 +4,7 @@ import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationExcept
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.bans.BanCommand;
+import net.robbytu.banjoserver.bungee.bans.TempBanCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -37,6 +38,7 @@ public class Main extends Plugin {
     private void registerCommands() {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new WarnsCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new BanCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new TempBanCommand());
     }
 
     public void onDisable() {
