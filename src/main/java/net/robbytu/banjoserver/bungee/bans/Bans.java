@@ -43,13 +43,13 @@ public class Bans {
         }
     }
 
-    public static Ban[] getUserBans(String username) {
+    public static Ban[] getUserBans(String username, boolean activeOnly) {
         Connection conn = Main.conn;
         ArrayList<Ban> bans = new ArrayList<Ban>();
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, reason, date, server, tempban, active FROM bs_warns WHERE username LIKE ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, reason, date, server, tempban, active FROM bs_warns WHERE username LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
