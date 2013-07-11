@@ -8,6 +8,9 @@ import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
+import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
+import net.robbytu.banjoserver.bungee.tp.TpCommand;
+import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -56,6 +59,9 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPBanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanIPCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpAcceptCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpDenyCommand());
     }
 
     private void registerListeners() {
