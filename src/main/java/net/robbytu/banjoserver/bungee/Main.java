@@ -3,10 +3,7 @@ package net.robbytu.banjoserver.bungee;
 import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationException;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
-import net.robbytu.banjoserver.bungee.bans.BanCommand;
-import net.robbytu.banjoserver.bungee.bans.BanLoginListener;
-import net.robbytu.banjoserver.bungee.bans.IPBanCommand;
-import net.robbytu.banjoserver.bungee.bans.TempBanCommand;
+import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
@@ -47,6 +44,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TempBanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new KickCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPBanCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanIPCommand());
     }
 
     private void registerListeners() {
