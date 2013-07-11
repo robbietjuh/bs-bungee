@@ -14,7 +14,7 @@ public class Warns {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username LIKE ?");
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
