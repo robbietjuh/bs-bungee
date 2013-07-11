@@ -80,6 +80,41 @@ public class Bans {
         return bans.toArray(new Ban[bans.size()]);
     }
 
+    public static void updateUserBan(Ban ban) {
+        // Update User ban
+        try {
+            Connection conn = Main.conn;
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_bans SET user = ?, mod = ?, reason = ?, date = ?, server = ?, tempban = ?, active = ? WHERE id = ?");
+
+            statement.setString(1, ban.username);
+            statement.setString(2, ban.mod);
+            statement.setString(3, ban.reason);
+            statement.setInt(4, ban.date);
+            statement.setString(5, ban.server);
+            statement.setInt(6, ban.tempban);
+            statement.setInt(7, ((ban.active) ? 1 : 0));
+            statement.setInt(8, ban.id);
+
+            statement.executeUpdate();
+
+            if (ban.active) {
+                kickBannedPlayer(ban);
+
+                for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+                    if(player.hasPermission("bs.admin")) {
+                        player.sendMessage("");
+                        player.sendMessage(ChatColor.RED + ban.mod + " heeft " + ban.username + " gebanned:");
+                        player.sendMessage(ChatColor.RED + " * " + ban.reason);
+                        player.sendMessage("");
+                    }
+                }
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void kickBannedPlayer(Ban ban) {
         if(Main.instance.getProxy().getPlayer(ban.username) != null) {
             if(ban.isTempban()) {
