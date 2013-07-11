@@ -3,12 +3,14 @@ package net.robbytu.banjoserver.bungee;
 import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationException;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.concurrent.TimeUnit;
 
 public class Main extends Plugin {
     public static final String PLUGIN_NAME = "bs-bungee";
@@ -36,6 +38,9 @@ public class Main extends Plugin {
 
         getLogger().info("Registering listeners...");
         this.registerListeners();
+
+        getLogger().info("Registering scheduled tasks...");
+        this.registerSchedulers();
     }
 
     private void registerCommands() {
@@ -50,6 +55,10 @@ public class Main extends Plugin {
 
     private void registerListeners() {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new BanLoginListener());
+    }
+
+    private void registerSchedulers() {
+        ProxyServer.getInstance().getScheduler().schedule(this, new BroadcastTask(), 300, TimeUnit.SECONDS);
     }
 
     public void onDisable() {
