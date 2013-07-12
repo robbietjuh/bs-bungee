@@ -11,7 +11,8 @@ public class TeleportUtil {
     private static HashMap<ProxiedPlayer, ProxiedPlayer> targets = new HashMap<ProxiedPlayer, ProxiedPlayer>();
 
     public static boolean isAwaitingApproval(ProxiedPlayer sender, ProxiedPlayer target) {
-        return (requests.get(sender).equals(target));
+        if(requests.containsKey(sender)) return (requests.get(sender).equals(target));
+        else return false;
     }
 
     public static void requestTeleport(ProxiedPlayer sender, ProxiedPlayer target) {

@@ -4,16 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Warn {
-    public int id;
-    public String username;
-    public String mod;
-    public String warn;
-    public int date;
-    public String server;
+    public int id = 0;
+    public String username = "";
+    public String mod = "";
+    public String warn = "";
+    public int date = (int) (System.currentTimeMillis() / 1000L);
+    public String server = "";
+    public boolean active = true;
 
-    public Warn() {
-        this.id = 0;
-        this.date = (int) (System.currentTimeMillis() / 1000L);
+    public void setActive(int active) {
+        this.active = (active == 1);
     }
 
     public String getFriendlyDate() {

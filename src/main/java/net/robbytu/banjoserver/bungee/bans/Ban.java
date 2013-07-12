@@ -4,21 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ban {
-    public int id;
-    public String username;
-    public String mod;
-    public String reason;
-    public int date;
-    public String server;
-    public int tempban;
-    public boolean active;
-
-    public Ban() {
-        this.id = 0;
-        this.date = (int) (System.currentTimeMillis() / 1000L);
-        this.active = true;
-        this.tempban = 0;
-    }
+    public int id = 0;
+    public String username = "";
+    public String mod = "";
+    public String reason = "";
+    public int date = (int) (System.currentTimeMillis() / 1000L);
+    public String server = "";
+    public int tempban = 0;
+    public boolean active = true;
 
     public void setActive(int active) {
         this.active = (active == 1);

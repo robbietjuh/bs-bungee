@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class AutoMessages {
-    public static String[] broadcasts;
+    public static String[] broadcasts = new String[0];
     public static int currentBroadcast;
 
     public static void broadcastNext() {

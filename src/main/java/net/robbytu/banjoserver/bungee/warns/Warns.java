@@ -8,13 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Warns {
-    public static Warn[] getUserWarns(String username) {
+    public static Warn[] getUserWarns(String username, boolean activeOnly) {
         Connection conn = Main.conn;
         ArrayList<Warn> warns = new ArrayList<Warn>();
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server FROM bs_warns WHERE username LIKE ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server, active FROM bs_warns WHERE user LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
@@ -30,6 +30,7 @@ public class Warns {
                 warn.warn = result.getString(4);
                 warn.date = result.getInt(5);
                 warn.server = result.getString(6);
+                warn.setActive(result.getInt(7));
 
                 // Add warn to return array
                 warns.add(warn);
@@ -47,7 +48,7 @@ public class Warns {
         // Insert User warn
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_warns (user, admin, warn, date, server) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_warns (user, admin, warn, date, server, active) VALUES (?, ?, ?, ?, ?, 1)");
 
             statement.setString(1, warn.username);
             statement.setString(2, warn.mod);
@@ -73,13 +74,13 @@ public class Warns {
         }
     }
 
-    public static Warn getWarnById(int id) {
+    public static Warn getWarnById(String id) {
         // Get warn by ID
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server FROM bs_warns WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server, active FROM bs_warns WHERE id = ?");
 
-            statement.setInt(1, id);
+            statement.setString(1, id);
 
             ResultSet result = statement.executeQuery();
             if(result.next()) {
@@ -93,6 +94,7 @@ public class Warns {
                 warn.warn = result.getString(4);
                 warn.date = result.getInt(5);
                 warn.server = result.getString(6);
+                warn.setActive(result.getInt(7));
 
                 return warn;
             }
@@ -104,16 +106,16 @@ public class Warns {
         return null;
     }
 
-    public static void removeWarnById(int id) {
+    public static void removeWarnById(String id) {
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM bs_warns WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_warns SET active = 0 WHERE id = ?");
 
-            statement.setInt(1, id);
+            statement.setString(1, id);
 
             statement.executeUpdate();
 
-            Main.instance.getLogger().info("Warn #" + id + " got removed");
+            Main.instance.getLogger().info("Warn #" + id + " got set to inactive.");
         }
         catch (SQLException e) {
             e.printStackTrace();

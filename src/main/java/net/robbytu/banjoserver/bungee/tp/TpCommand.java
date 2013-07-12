@@ -24,6 +24,11 @@ public class TpCommand extends Command {
             return;
         }
 
+        if(sender.getName().equalsIgnoreCase(args[0])) {
+            this.failCommand(sender, "Je kan niet naar jezelf teleporteren...");
+            return;
+        }
+
         if(TeleportUtil.isAwaitingApproval(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]))) {
             this.failCommand(sender, "Je hebt " + args[0] + " al een verzoek gestuurd.");
             return;
