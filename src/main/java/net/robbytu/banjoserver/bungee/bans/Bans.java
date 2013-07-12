@@ -85,7 +85,7 @@ public class Bans {
         // Update User ban
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("UPDATE bs_bans SET user = ?, mod = ?, reason = ?, date = ?, server = ?, tempban = ?, active = ? WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_bans SET user = ?, admin = ?, reason = ?, date = ?, server = ?, tempban = ?, active = ? WHERE id = ?");
 
             statement.setString(1, ban.username);
             statement.setString(2, ban.mod);
