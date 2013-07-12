@@ -24,7 +24,7 @@ public class BanCommand extends Command {
         }
 
         String reasonBody = "";
-        for (int i = 0; i < args.length - 1; i++) reasonBody += args[i];
+        for (int i = 1; i < args.length; i++) reasonBody += ((args.length == 0) ? "" : " ") + args[i];
 
         Ban ban = new Ban();
         ban.username = args[0];
