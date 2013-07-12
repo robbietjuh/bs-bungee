@@ -14,7 +14,7 @@ public class Warns {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE username LIKE ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server FROM bs_warns WHERE username LIKE ?");
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
@@ -47,7 +47,7 @@ public class Warns {
         // Insert User warn
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_warns (user, mod, warn, date, server) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_warns (user, admin, warn, date, server) VALUES (?, ?, ?, ?, ?)");
 
             statement.setString(1, warn.username);
             statement.setString(2, warn.mod);
@@ -77,7 +77,7 @@ public class Warns {
         // Get warn by ID
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, warn, date, server FROM bs_warns WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, warn, date, server FROM bs_warns WHERE id = ?");
 
             statement.setInt(1, id);
 

@@ -15,7 +15,7 @@ public class Bans {
         // Insert User ban
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_bans (user, mod, reason, date, server, tempban, active) VALUES (?, ?, ?, ?, ?, ?, 1)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_bans (user, admin, reason, date, server, tempban, active) VALUES (?, ?, ?, ?, ?, ?, 1)");
 
             statement.setString(1, ban.username);
             statement.setString(2, ban.mod);
@@ -50,7 +50,7 @@ public class Bans {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, mod, reason, date, server, tempban, active FROM bs_warns WHERE username LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, reason, date, server, tempban, active FROM bs_warns WHERE user LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
