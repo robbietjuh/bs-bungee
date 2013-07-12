@@ -50,7 +50,7 @@ public class Bans {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, reason, date, server, tempban, active FROM bs_warns WHERE user LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
+            PreparedStatement statement = conn.prepareStatement("SELECT id, user, admin, reason, date, server, tempban, active FROM bs_bans WHERE user LIKE ?" + ((activeOnly) ? " AND active = 1" : ""));
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
