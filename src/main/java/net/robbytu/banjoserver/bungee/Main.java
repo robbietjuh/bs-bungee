@@ -76,8 +76,7 @@ public class Main extends Plugin {
     }
 
     private void registerChannels() {
-        ProxyServer.getInstance().registerChannel("BungeeSuite");
-        ProxyServer.getInstance().registerChannel("BungeeSuiteMC");
+        ProxyServer.getInstance().registerChannel("BSBungee");
     }
 
     public void onDisable() {
