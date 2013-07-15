@@ -66,6 +66,21 @@ public class TicketCommand extends Command {
 
             this.acceptTicket(sender, Tickets.getOpenTickets()[0]);
         }
+        else if(args[0] == "list") {
+            // No permissions check. It might be fun for users to see what admins are doing - and hey, we're not the NSA :P. We're quite open. We love sharing information! :-)
+            Ticket[] tickets = Tickets.getOpenTickets();
+
+            if(tickets.length == 0) {
+                this.failCommand(sender, "There are no open tickets at this moment.");
+                return;
+            }
+
+            sender.sendMessage(" ");
+            sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
+            for(Ticket ticket : tickets) sender.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ((ticket.question.length() > 40) ? ticket.question.substring(0, 40) : ticket.question));
+            sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
+            sender.sendMessage(" ");
+        }
         else if(args[0] == "close") {
             if(Tickets.inTicket(sender.getName())) {
                 Ticket ticket = Tickets.getCurrentTicketForUser(sender.getName());
