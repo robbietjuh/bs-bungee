@@ -7,6 +7,6 @@ import java.util.concurrent.TimeUnit;
 public class ReminderTask implements Runnable {
     public void run() {
         Tickets.remindAdminsOfOpenTickets();
-        Main.instance.getProxy().getScheduler().schedule(Main.instance, new ReminderTask(), 300, TimeUnit.SECONDS);
+        Main.instance.getProxy().getScheduler().schedule(Main.instance, new ReminderTask(), 60, TimeUnit.SECONDS);
     }
 }

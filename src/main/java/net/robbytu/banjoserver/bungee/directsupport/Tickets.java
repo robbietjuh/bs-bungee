@@ -186,8 +186,8 @@ public class Tickets {
                 if(player.hasPermission("bs.admin") || player.hasPermission("bs.helper")) {
                     player.sendMessage(" ");
                     player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
-                    for(Ticket ticket : tickets) player.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ticket.question.substring(0, 40));
-                    player.sendMessage(ChatColor.GOLD + "Je kan tickets accepteren met /ticket accept [id]");
+                    for(Ticket ticket : tickets) player.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ((ticket.question.length() > 40) ? ticket.question.substring(0, 40) : ticket.question));
+                    player.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
                     player.sendMessage(" ");
                 }
             }
