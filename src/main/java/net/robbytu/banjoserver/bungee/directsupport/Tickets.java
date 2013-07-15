@@ -1,5 +1,7 @@
 package net.robbytu.banjoserver.bungee.directsupport;
 
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
 
 import java.sql.Connection;
@@ -11,6 +13,43 @@ import java.util.HashMap;
 
 public class Tickets {
     private static HashMap<String, Ticket> usersInTicket = new HashMap<String, Ticket>();
+
+    public static Ticket[] getOpenTickets() {
+        Connection conn = Main.conn;
+        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+
+        try {
+            // Create a new select statement
+            PreparedStatement statement = conn.prepareStatement("SELECT id, username, admin, status, question, server, date_created, date_accepted, date_resolved FROM bs_tickets WHERE status = 'open'");
+            ResultSet result = statement.executeQuery();
+
+            // For each ticket ...
+            while(result.next()) {
+                // Create a new Ticket instance
+                Ticket ticket = new Ticket();
+
+                // Fill in properties
+                ticket.id = result.getInt(1);
+                ticket.username = result.getString(2);
+                ticket.admin = result.getString(3);
+                ticket.status = result.getString(4);
+                ticket.question = result.getString(5);
+                ticket.server = result.getString(6);
+                ticket.date_created = result.getInt(7);
+                ticket.date_accepted = result.getInt(8);
+                ticket.date_resolved = result.getInt(9);
+
+                // Add ban to return array
+                tickets.add(ticket);
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Return the array of tickets
+        return tickets.toArray(new Ticket[tickets.size()]);
+    }
 
     public static Ticket[] getTickets(String username, String status) {
         Connection conn = Main.conn;
@@ -138,5 +177,20 @@ public class Tickets {
 
     public static Ticket getCurrentTicketForUser(String name) {
         return (inTicket(name)) ? usersInTicket.get(name) : null;
+    }
+
+    public static void remindAdminsOfOpenTickets() {
+        Ticket[] tickets = getOpenTickets();
+        if (tickets.length > 0) {
+            for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+                if(player.hasPermission("bs.admin") || player.hasPermission("bs.helper")) {
+                    player.sendMessage(" ");
+                    player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
+                    for(Ticket ticket : tickets) player.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ticket.question.substring(0, 40));
+                    player.sendMessage(ChatColor.GOLD + "Je kan tickets accepteren met /ticket accept [id]");
+                    player.sendMessage(" ");
+                }
+            }
+        }
     }
 }
