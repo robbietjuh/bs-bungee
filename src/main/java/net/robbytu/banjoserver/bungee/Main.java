@@ -11,6 +11,7 @@ import net.robbytu.banjoserver.bungee.directsupport.TicketChatHandler;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
+import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
@@ -79,6 +80,7 @@ public class Main extends Plugin {
     private void registerSchedulers() {
         ProxyServer.getInstance().getScheduler().schedule(this, new BroadcastTask(), 300, TimeUnit.SECONDS);
         ProxyServer.getInstance().getScheduler().schedule(this, new ReminderTask(), 60, TimeUnit.SECONDS);
+        ProxyServer.getInstance().getScheduler().schedule(this, new MailCheckTask(), 300, TimeUnit.SECONDS);
     }
 
     private void registerChannels() {
