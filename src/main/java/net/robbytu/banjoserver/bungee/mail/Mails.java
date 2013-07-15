@@ -60,4 +60,24 @@ public class Mails {
             statement.executeUpdate();
         } catch (Exception ignored) {}
     }
+
+    public static void updateMail(Mail mail) {
+        // Update Mail object in database
+        try {
+            Connection conn = Main.conn;
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET from_user = ?, to_user = ?, date = ?, message = ?, unread = ? WHERE id = ?");
+
+            statement.setString(1, mail.from_user);
+            statement.setString(2, mail.to_user);
+            statement.setInt(3, mail.date);
+            statement.setString(4, mail.message);
+            statement.setInt(5, (mail.unread) ? 1 : 0);
+            statement.setInt(6, mail.id);
+
+            statement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

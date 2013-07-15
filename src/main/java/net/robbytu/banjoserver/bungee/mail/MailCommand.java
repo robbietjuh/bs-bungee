@@ -5,7 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class MailCommand extends Command {
-    private final String usage = "/mail [send] [user] [message]";
+    private final String usage = "/mail [send/read] [user] [message]";
 
     public MailCommand() {
         super("mail", null, "psm");
@@ -26,6 +26,25 @@ public class MailCommand extends Command {
             Mails.sendMail(mail);
 
             sender.sendMessage(ChatColor.GREEN + "Bericht is verstuurd.");
+        }
+        else if(args.length == 0 || ((args.length == 1 || args.length == 2) && args[0] == "read")) {
+            Mail[] mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
+
+            if(mails.length == 0) {
+                sender.sendMessage(ChatColor.GRAY + "Geen berichten");
+                return;
+            }
+
+            sender.sendMessage(ChatColor.AQUA + "Berichten" + ((args.length == 2) ? " - Pagina " + args[1] : ""));
+
+            for(Mail mail : mails) {
+                sender.sendMessage(ChatColor.GRAY + "" + ((mail.unread) ? ChatColor.BOLD : "") + mail.from_user + ": " + mail.message);
+
+                if(mail.unread) {
+                    mail.unread = false;
+                    Mails.updateMail(mail);
+                }
+            }
         }
     }
 }
