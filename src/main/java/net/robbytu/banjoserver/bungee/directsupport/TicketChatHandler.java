@@ -33,6 +33,8 @@ public class TicketChatHandler implements Listener {
         }
 
         sender.sendMessage(event.getMessage());
+        Main.instance.getLogger().info("Ticket #" + ticket.id + ": " + event.getMessage());
+
         event.setCancelled(true);
     }
 }
