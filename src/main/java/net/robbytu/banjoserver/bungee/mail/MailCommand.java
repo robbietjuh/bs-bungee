@@ -50,5 +50,13 @@ public class MailCommand extends Command {
             Mails.clearMailboxForUser(sender.getName());
             sender.sendMessage(ChatColor.GREEN + "Mailbox leeggemaakt.");
         }
+        else {
+            this.failCommand(sender, "Unknown argument");
+        }
+    }
+
+    private void failCommand(CommandSender sender, String message) {
+        sender.sendMessage(ChatColor.RED + message);
+        sender.sendMessage(ChatColor.GRAY + "Usage: " + ChatColor.ITALIC + this.usage);
     }
 }
