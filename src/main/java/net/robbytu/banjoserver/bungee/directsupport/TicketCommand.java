@@ -46,22 +46,25 @@ public class TicketCommand extends Command {
                 return;
             }
 
-            ticket.date_accepted = (int) (System.currentTimeMillis() / 1000L);
-            ticket.admin = sender.getName();
-            Tickets.updateTicket(ticket);
-
-            Tickets.usersInTicket.put(sender.getName(), "" + ticket.id); // Lazy hack, I know... But it works :-/
-            Tickets.usersInTicket.put(ticket.username, "" + ticket.id);
-
-            Main.instance.getProxy().getPlayer(ticket.username).sendMessage(ChatColor.GREEN + "Je wordt nu geholpen door " + sender.getName());
-
-            sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.AQUA + "Ticket #" + ticket.id + " door " + ticket.username + " in " + ticket.server);
-            sender.sendMessage(ChatColor.AQUA + " * " + ticket.question);
-            sender.sendMessage(" ");
+            this.acceptTicket(sender, ticket);
         }
         else if(args[0] == "next") {
-            // BS-54
+            if(!sender.hasPermission("bs.admin") && !sender.hasPermission("bs.helper")) {
+                this.failCommand(sender, "You're not allowed to accept tickets.");
+                return;
+            }
+
+            if(Tickets.inTicket(sender.getName())) {
+                this.failCommand(sender, "You're already helping someone else.");
+                return;
+            }
+
+            if(Tickets.getOpenTickets().length == 0) {
+                this.failCommand(sender, "There are no open tickets at this moment.");
+                return;
+            }
+
+            this.acceptTicket(sender, Tickets.getOpenTickets()[0]);
         }
         else if(args[0] == "close") {
             if(Tickets.inTicket(sender.getName())) {
@@ -76,6 +79,22 @@ public class TicketCommand extends Command {
                 Tickets.updateTicket(ticket);
             }
         }
+    }
+
+    private void acceptTicket(CommandSender sender, Ticket ticket) {
+        ticket.date_accepted = (int) (System.currentTimeMillis() / 1000L);
+        ticket.admin = sender.getName();
+        Tickets.updateTicket(ticket);
+
+        Tickets.usersInTicket.put(sender.getName(), "" + ticket.id); // Lazy hack, I know... But it works :-/
+        Tickets.usersInTicket.put(ticket.username, "" + ticket.id);
+
+        Main.instance.getProxy().getPlayer(ticket.username).sendMessage(ChatColor.GREEN + "Je wordt nu geholpen door " + sender.getName());
+
+        sender.sendMessage(" ");
+        sender.sendMessage(ChatColor.AQUA + "Ticket #" + ticket.id + " door " + ticket.username + " in " + ticket.server);
+        sender.sendMessage(ChatColor.AQUA + " * " + ticket.question);
+        sender.sendMessage(" ");
     }
 
     private void failCommand(CommandSender sender, String message) {
