@@ -5,7 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class MailCommand extends Command {
-    private final String usage = "/mail [send/read] [user/page] [message]";
+    private final String usage = "/mail [send/read/clear] [user/page] [message]";
 
     public MailCommand() {
         super("mail", null, "psm");
@@ -45,6 +45,10 @@ public class MailCommand extends Command {
                     Mails.updateMail(mail);
                 }
             }
+        }
+        else if(args.length == 1 && args[0] == "clear") {
+            Mails.clearMailboxForUser(sender.getName());
+            sender.sendMessage(ChatColor.GREEN + "Mailbox leeggemaakt.");
         }
     }
 }

@@ -16,7 +16,7 @@ public class Mails {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, from_user, to_user, date, message, unread FROM bs_mail WHERE to_user = ? LIMIT " + (10*(page+1)) + ",10");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, from_user, to_user, date, message, unread FROM bs_mail WHERE to_user = ? AND removed = 0 LIMIT " + (10*(page+1)) + ",10");
             statement.setString(1, user);
             ResultSet result = statement.executeQuery();
 
@@ -49,7 +49,7 @@ public class Mails {
         Connection conn = Main.conn;
 
         try {
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_mail (from_user, to_user, date, message, unread) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_mail (from_user, to_user, date, message, unread, removed) VALUES (?, ?, ?, ?, ?, 0)");
 
             statement.setString(1, mail.from_user);
             statement.setString(2, mail.to_user);
@@ -65,7 +65,7 @@ public class Mails {
         // Update Mail object in database
         try {
             Connection conn = Main.conn;
-            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET from_user = ?, to_user = ?, date = ?, message = ?, unread = ? WHERE id = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET from_user = ?, to_user = ?, date = ?, message = ?, unread = ? WHERE id = ? AND removed = 0");
 
             statement.setString(1, mail.from_user);
             statement.setString(2, mail.to_user);
@@ -76,8 +76,18 @@ public class Mails {
 
             statement.executeUpdate();
         }
-        catch (SQLException e) {
-            e.printStackTrace();
+        catch (Exception ignored) {}
+    }
+
+    public static void clearMailboxForUser(String name) {
+        // Update everything but DO NOT delete it, just in case we need to get some logs
+        try {
+            Connection conn = Main.conn;
+
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET removed = 1 WHERE to_user = ?");
+            statement.setString(1, name);
+            statement.executeUpdate();
         }
+        catch(Exception ignored) {}
     }
 }
