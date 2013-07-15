@@ -9,6 +9,7 @@ import java.util.HashMap;
 public class TeleportUtil {
     private static HashMap<ProxiedPlayer, ProxiedPlayer> requests = new HashMap<ProxiedPlayer, ProxiedPlayer>();
     private static HashMap<ProxiedPlayer, ProxiedPlayer> targets = new HashMap<ProxiedPlayer, ProxiedPlayer>();
+    public static HashMap<ProxiedPlayer, Integer> timings = new HashMap<ProxiedPlayer, Integer>();
 
     public static boolean isAwaitingApproval(ProxiedPlayer sender, ProxiedPlayer target) {
         if(requests.containsKey(sender)) return (requests.get(sender).equals(target));
@@ -35,6 +36,20 @@ public class TeleportUtil {
         ProxiedPlayer sender = targets.get(target);
         if(sender == null) return false;
 
+        if(timings.get(target) != null) {
+            if(timings.get(target) > (int) (System.currentTimeMillis() / 1000L)) {
+                sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
+                return false;
+            }
+        }
+
+        if(timings.get(sender) != null) {
+            if(timings.get(sender) > (int) (System.currentTimeMillis() / 1000L)) {
+                sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
+                return false;
+            }
+        }
+
         targets.remove(target);
         requests.remove(sender);
 
@@ -46,6 +61,9 @@ public class TeleportUtil {
         }
 
         PluginMessager.sendMessage(target.getServer(), "teleport", sender.getName(), target.getName());
+
+        timings.put(target, (int) (System.currentTimeMillis() / 1000L) + 3);
+        timings.put(sender, (int) (System.currentTimeMillis() / 1000L) + 3);
 
         return true;
     }
