@@ -78,7 +78,7 @@ public class TicketCommand extends Command {
             sender.sendMessage(" ");
             sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
             for(Ticket ticket : tickets) sender.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ((ticket.question.length() > 40) ? ticket.question.substring(0, 40) : ticket.question));
-            sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
+            if(sender.hasPermission("bs.admin") || sender.hasPermission("bs.helper")) sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
             sender.sendMessage(" ");
         }
         else if(args[0] == "close") {
