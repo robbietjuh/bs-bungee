@@ -45,6 +45,9 @@ public class HelpCommand extends Command {
         ticket.question = question;
 
         Tickets.createTicket(ticket);
+
+        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(player.hasPermission("bs.admin")) player.sendMessage(ChatColor.AQUA + ticket.username + " heeft een ticket aangemaakt: " + ticket.question);
+
         sender.sendMessage(ChatColor.GREEN + "Je ticket is aangemaakt. Je wordt zo snel mogelijk geholpen!");
     }
 }
