@@ -5,6 +5,7 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
+import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
@@ -62,6 +63,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpAcceptCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpDenyCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new HelpCommand());
     }
 
     private void registerListeners() {
