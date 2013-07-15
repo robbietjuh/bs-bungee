@@ -20,7 +20,45 @@ public class TicketCommand extends Command {
         }
 
         if(args[0] == "accept") {
-            // BS-52
+            if(args.length != 2) {
+                this.failCommand(sender, "Please specify an ID");
+                return;
+            }
+
+            if(!sender.hasPermission("bs.admin") && !sender.hasPermission("bs.helper")) {
+                this.failCommand(sender, "You're not allowed to accept tickets.");
+                return;
+            }
+
+            if(Tickets.inTicket(sender.getName())) {
+                this.failCommand(sender, "You're already helping someone else.");
+                return;
+            }
+
+            Ticket ticket = Tickets.getTicket(args[1]);
+            if(ticket == null) {
+                this.failCommand(sender, "Unknown ticket.");
+                return;
+            }
+
+            if(ticket.status != "open") {
+                this.failCommand(sender, "This ticket is " + ticket.status + ". It should be open for you to accept it.");
+                return;
+            }
+
+            ticket.date_accepted = (int) (System.currentTimeMillis() / 1000L);
+            ticket.admin = sender.getName();
+            Tickets.updateTicket(ticket);
+
+            Tickets.usersInTicket.put(sender.getName(), "" + ticket.id); // Lazy hack, I know... But it works :-/
+            Tickets.usersInTicket.put(ticket.username, "" + ticket.id);
+
+            Main.instance.getProxy().getPlayer(ticket.username).sendMessage(ChatColor.GREEN + "Je wordt nu geholpen door " + sender.getName());
+
+            sender.sendMessage(" ");
+            sender.sendMessage(ChatColor.AQUA + "Ticket #" + ticket.id + " door " + ticket.username + " in " + ticket.server);
+            sender.sendMessage(ChatColor.AQUA + " * " + ticket.question);
+            sender.sendMessage(" ");
         }
         else if(args[0] == "next") {
             // BS-54

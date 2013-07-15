@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Tickets {
-    private static HashMap<String, Ticket> usersInTicket = new HashMap<String, Ticket>();
+    public static HashMap<String, String> usersInTicket = new HashMap<String, String>();
 
     public static Ticket[] getOpenTickets() {
         Connection conn = Main.conn;
@@ -90,13 +90,13 @@ public class Tickets {
         return tickets.toArray(new Ticket[tickets.size()]);
     }
 
-    public static Ticket getTicket(int id) {
+    public static Ticket getTicket(String id) {
         Connection conn = Main.conn;
 
         try {
             // Create a new select statement
             PreparedStatement statement = conn.prepareStatement("SELECT id, username, admin, status, question, server, date_created, date_accepted, date_resolved FROM bs_tickets WHERE id = ?");
-            statement.setInt(1, id);
+            statement.setString(1, id);
             ResultSet result = statement.executeQuery();
 
             // Fetch ticket
@@ -176,7 +176,7 @@ public class Tickets {
     }
 
     public static Ticket getCurrentTicketForUser(String name) {
-        return (inTicket(name)) ? usersInTicket.get(name) : null;
+        return (inTicket(name)) ? getTicket(usersInTicket.get(name)) : null;
     }
 
     public static void remindAdminsOfOpenTickets() {
