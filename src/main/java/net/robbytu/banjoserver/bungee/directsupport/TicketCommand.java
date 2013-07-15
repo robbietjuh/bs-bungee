@@ -6,7 +6,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
 
 public class TicketCommand extends Command {
-    private final String usage = "/ticket [accept/next/close] [id]";
+    private final String usage = "/ticket [accept/next/list/close] [id]";
 
     public TicketCommand() {
         super("ticket");
