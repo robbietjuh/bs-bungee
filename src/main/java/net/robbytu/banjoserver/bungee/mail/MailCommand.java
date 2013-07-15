@@ -5,7 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 
 public class MailCommand extends Command {
-    private final String usage = "/mail [send/read] [user] [message]";
+    private final String usage = "/mail [send/read] [user/page] [message]";
 
     public MailCommand() {
         super("mail", null, "psm");
