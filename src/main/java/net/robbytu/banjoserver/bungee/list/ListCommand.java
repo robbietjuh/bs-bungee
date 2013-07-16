@@ -20,7 +20,7 @@ public class ListCommand extends Command {
         sender.sendMessage(ChatColor.BLUE + "Er zijn " + ChatColor.BOLD + Main.instance.getProxy().getOnlineCount() + ChatColor.RESET + "" + ChatColor.GREEN + "/" + ((ListenerInfo) Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + " spelers online.");
 
         for(ServerInfo info : Main.instance.getProxy().getServers().values()) {
-            sender.sendMessage(ChatColor.GRAY + info.getName() + ": " + info.getPlayers().size());
+            sender.sendMessage(ChatColor.GRAY + info.getName() + ": " + info.getPlayers().size() + " online");
         }
 
         sender.sendMessage(" ");
