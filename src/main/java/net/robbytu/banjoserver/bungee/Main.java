@@ -14,6 +14,7 @@ import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
 import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
+import net.robbytu.banjoserver.bungee.mute.MuteChatListener;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
@@ -77,6 +78,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new PluginMessageListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new TicketChatHandler());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MailLoginHandler());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new MuteChatListener());
     }
 
     private void registerSchedulers() {
