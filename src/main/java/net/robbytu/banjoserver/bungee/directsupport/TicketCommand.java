@@ -19,7 +19,7 @@ public class TicketCommand extends Command {
             return;
         }
 
-        if(args[0] == "accept") {
+        if(args[0].equalsIgnoreCase("accept")) {
             if(args.length != 2) {
                 this.failCommand(sender, "Please specify an ID");
                 return;
@@ -41,14 +41,14 @@ public class TicketCommand extends Command {
                 return;
             }
 
-            if(ticket.status != "open") {
+            if(ticket.status.equalsIgnoreCase("open")) {
                 this.failCommand(sender, "This ticket is " + ticket.status + ". It should be open for you to accept it.");
                 return;
             }
 
             this.acceptTicket(sender, ticket);
         }
-        else if(args[0] == "next") {
+        else if(args[0].equalsIgnoreCase("next")) {
             if(!sender.hasPermission("bs.admin") && !sender.hasPermission("bs.helper")) {
                 this.failCommand(sender, "You're not allowed to accept tickets.");
                 return;
@@ -66,7 +66,7 @@ public class TicketCommand extends Command {
 
             this.acceptTicket(sender, Tickets.getOpenTickets()[0]);
         }
-        else if(args[0] == "list") {
+        else if(args[0].equalsIgnoreCase("list")) {
             // No permissions check. It might be fun for users to see what admins are doing - and hey, we're not the NSA :P. We're quite open. We love sharing information! :-)
             Ticket[] tickets = Tickets.getOpenTickets();
 
@@ -81,7 +81,7 @@ public class TicketCommand extends Command {
             if(sender.hasPermission("bs.admin") || sender.hasPermission("bs.helper")) sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
             sender.sendMessage(" ");
         }
-        else if(args[0] == "close") {
+        else if(args[0].equalsIgnoreCase("close")) {
             if(Tickets.inTicket(sender.getName())) {
                 Ticket ticket = Tickets.getCurrentTicketForUser(sender.getName());
 
