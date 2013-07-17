@@ -27,4 +27,6 @@ public class PluginConfig extends Config {
     public String db_database = "minecraft";
 
     public int warns_banAt = 3;
+
+    public int targetpay_rtlo = 0;
 }
