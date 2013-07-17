@@ -63,4 +63,33 @@ public class DonateUtil {
             e.printStackTrace();
         }
     }
+
+    public static void processSuccesfulDonation(String username, Donation donation) {
+        Connection conn = Main.conn;
+        ArrayList<String> tasks = new ArrayList<String>();
+
+        try {
+            // Create a new select statement
+            PreparedStatement statement = conn.prepareStatement("SELECT task FROM bs_donation_tasks WHERE donation = ?");
+            statement.setInt(1, donation.id);
+            ResultSet result = statement.executeQuery();
+
+            // For each donation task ...
+            while(result.next()) {
+                tasks.add(result.getString(1).replaceAll("$USER", username));
+            }
+
+            // Add them to the task queue
+            for(String task : tasks) {
+                statement = conn.prepareStatement("INSERT INTO bs_tasks (tasktype, task, server) VALUES (?, ?, ?)");
+
+                statement.setInt(1, 1);
+                statement.setString(2, task);
+                statement.setString(3, donation.server);
+
+                statement.executeUpdate();
+            }
+
+        } catch (Exception ignored) {}
+    }
 }
