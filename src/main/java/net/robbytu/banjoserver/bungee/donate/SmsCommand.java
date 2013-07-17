@@ -2,6 +2,7 @@ package net.robbytu.banjoserver.bungee.donate;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
 
@@ -66,6 +67,14 @@ public class SmsCommand extends Command {
                         if(response[0].equals("000")) {
                             // Succesful
                             DonateUtil.processSuccesfulDonation(sender.getName(), finalDonation);
+
+                            for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+                                if(!player.getName().equalsIgnoreCase(sender.getName())) {
+                                    player.sendMessage(ChatColor.YELLOW + sender.getName() + " heeft gedoneerd voor " + finalDonation.title + " in de " + Main.instance.getProxy().getPlayer(sender.getName()).getServer().getInfo().getName() + " server");
+                                    player.sendMessage(ChatColor.GRAY + "Je kan zelf ook doneren met het /doneer commando.");
+                                }
+                            }
+
                             sender.sendMessage(ChatColor.GREEN + "De transactie is voltooid en je donatie wordt binnen enkele minuten verwerkt. Bedankt!");
                         }
                         else if(response[0].equals("103")) {
