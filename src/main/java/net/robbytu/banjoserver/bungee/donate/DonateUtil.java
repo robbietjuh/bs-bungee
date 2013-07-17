@@ -7,8 +7,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class DonateUtil {
+    public static HashMap<String, String> prices = new HashMap<String, String>();
+
     public static Donation[] getDonationsForServer(String server) {
         Connection conn = Main.conn;
         ArrayList<Donation> donations = new ArrayList<Donation>();
@@ -42,5 +45,22 @@ public class DonateUtil {
 
         // Return the array of donations
         return donations.toArray(new Donation[donations.size()]);
+    }
+
+    public static void populateStatics() {
+        Connection conn = Main.conn;
+
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT keyword, price FROM bs_keywords");
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                // Populate statics
+                prices.put(result.getString(1), result.getString(2));
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
