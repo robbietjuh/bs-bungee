@@ -9,6 +9,7 @@ import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.directsupport.ReminderTask;
 import net.robbytu.banjoserver.bungee.directsupport.TicketChatHandler;
 import net.robbytu.banjoserver.bungee.donate.DonateCommand;
+import net.robbytu.banjoserver.bungee.donate.DonateUtil;
 import net.robbytu.banjoserver.bungee.donate.SmsCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.list.ListCommand;
@@ -58,6 +59,9 @@ public class Main extends Plugin {
 
         getLogger().info("Registering for plugin channels...");
         this.registerChannels();
+
+        getLogger().info("Populating statics...");
+        this.populateStatics();
     }
 
     private void registerCommands() {
@@ -93,6 +97,10 @@ public class Main extends Plugin {
 
     private void registerChannels() {
         ProxyServer.getInstance().registerChannel("BSBungee");
+    }
+
+    private void populateStatics() {
+        DonateUtil.populateStatics();
     }
 
     public void onDisable() {
