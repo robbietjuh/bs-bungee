@@ -9,6 +9,7 @@ import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.directsupport.ReminderTask;
 import net.robbytu.banjoserver.bungee.directsupport.TicketChatHandler;
 import net.robbytu.banjoserver.bungee.donate.DonateCommand;
+import net.robbytu.banjoserver.bungee.donate.SmsCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.list.ListCommand;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
@@ -73,6 +74,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new HelpCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ListCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new DonateCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new SmsCommand());
     }
 
     private void registerListeners() {
