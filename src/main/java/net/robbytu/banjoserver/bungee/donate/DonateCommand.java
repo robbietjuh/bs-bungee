@@ -38,7 +38,6 @@ public class DonateCommand extends Command {
             }
 
             sender.sendMessage(ChatColor.BOLD + "" + ChatColor.AQUA + donation.title + " - " + Main.instance.getProxy().getPlayer(sender.getName()).getServer().getInfo().getName() + " server");
-            sender.sendMessage(" ");
             sender.sendMessage(ChatColor.GRAY + donation.description);
             sender.sendMessage(" ");
             sender.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD + "Doneren: " + ChatColor.RESET + ChatColor.BLUE + "/sms " + donation.tag);
