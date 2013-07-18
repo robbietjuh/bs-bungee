@@ -1,6 +1,7 @@
 package net.robbytu.banjoserver.bungee.automessages;
 
 import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.config.ListenerInfo;
 import net.robbytu.banjoserver.bungee.Main;
 
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class AutoMessages {
     public static String[] broadcasts = new String[0];
     public static int currentBroadcast;
+    public static boolean lastOnline = false;
 
     public static void broadcastNext() {
         if(currentBroadcast == broadcasts.length) {
@@ -19,10 +21,14 @@ public class AutoMessages {
             currentBroadcast = 0;
         }
 
-        String message = broadcasts[currentBroadcast];
-        Main.instance.getProxy().broadcast(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "*" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_AQUA + ChatColor.translateAlternateColorCodes("&".charAt(0), message));
+        String message = "";
+        if(lastOnline) message = ChatColor.translateAlternateColorCodes("&".charAt(0), broadcasts[currentBroadcast]);
+        else message = ChatColor.GOLD + "" + Main.instance.getProxy().getPlayers().size() + "/" + ((ListenerInfo)Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + " online";
 
-        currentBroadcast++;
+        Main.instance.getProxy().broadcast(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "*" + ChatColor.DARK_GRAY + "] " + ChatColor.DARK_AQUA + message);
+
+        if(lastOnline) currentBroadcast++;
+        lastOnline = !lastOnline;
     }
 
     private static String[] fetchBroadcasts() {
