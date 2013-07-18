@@ -3,12 +3,9 @@ package net.robbytu.banjoserver.bungee.mute;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
-import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
 import net.robbytu.banjoserver.bungee.Main;
 
-public class MuteChatListener implements Listener {
-    @EventHandler
+public class MuteChatListener {
     public static void handleChat(ChatEvent event) {
         if(event.isCommand()) return;
 

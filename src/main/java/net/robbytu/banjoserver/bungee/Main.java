@@ -7,18 +7,17 @@ import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.directsupport.ReminderTask;
-import net.robbytu.banjoserver.bungee.directsupport.TicketChatHandler;
 import net.robbytu.banjoserver.bungee.directsupport.TicketCommand;
 import net.robbytu.banjoserver.bungee.donate.DonateCommand;
 import net.robbytu.banjoserver.bungee.donate.DonateUtil;
 import net.robbytu.banjoserver.bungee.donate.SmsCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.list.ListCommand;
+import net.robbytu.banjoserver.bungee.listeners.ChatListener;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
 import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
-import net.robbytu.banjoserver.bungee.mute.MuteChatListener;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
@@ -86,9 +85,8 @@ public class Main extends Plugin {
     private void registerListeners() {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new LoginListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new PluginMessageListener());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new TicketChatHandler());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new ChatListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MailLoginHandler());
-        ProxyServer.getInstance().getPluginManager().registerListener(this, new MuteChatListener());
     }
 
     private void registerSchedulers() {
