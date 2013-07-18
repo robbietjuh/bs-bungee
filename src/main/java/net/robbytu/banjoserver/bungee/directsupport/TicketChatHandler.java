@@ -10,8 +10,9 @@ import net.robbytu.banjoserver.bungee.Main;
 public class TicketChatHandler implements Listener {
     @EventHandler
     public static void handleChat(ChatEvent event) {
-        ProxiedPlayer sender = null;
+        if(event.getMessage().substring(0, 1).equals("/")) return;
 
+        ProxiedPlayer sender = null;
         for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
             if(player.getAddress().equals(event.getSender().getAddress())) {
                 sender = player;
