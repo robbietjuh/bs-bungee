@@ -98,6 +98,7 @@ public class TicketCommand extends Command {
 
     private void acceptTicket(CommandSender sender, Ticket ticket) {
         ticket.date_accepted = (int) (System.currentTimeMillis() / 1000L);
+        ticket.status = "accepted";
         ticket.admin = sender.getName();
         Tickets.updateTicket(ticket);
 
