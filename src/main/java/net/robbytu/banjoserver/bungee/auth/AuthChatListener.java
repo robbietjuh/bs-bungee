@@ -16,10 +16,13 @@ public class AuthChatListener {
 
         if(AuthProvider.isAuthenticated(sender)) return;
         if(!event.isCommand()) event.setCancelled(true);
-        if(!event.getMessage().substring(0, 7).equalsIgnoreCase("/login ") && !event.getMessage().substring(0, 10).equalsIgnoreCase("/register ")) event.setCancelled(true);
+
+        event.setCancelled(true);
+        if(event.getMessage().length() > 7 && event.getMessage().substring(0, 7).equalsIgnoreCase("/login ")) event.setCancelled(false);
+        else if(event.getMessage().length() > 10 && event.getMessage().substring(0, 10).equalsIgnoreCase("/register ")) event.setCancelled(false);
 
         if(event.isCancelled()) sender.sendMessage(ChatColor.RED + "" + ((AuthProvider.isRegistered(sender.getName()))
-                ? "Je bent niet ingelogd." + ChatColor.GRAY + "Log in met /login [wachtwoord]."
-                : "Je bent niet geregistreerd." + ChatColor.GRAY + "Registreer met /register [wachtwoord]."));
+                ? "Je bent niet ingelogd." + ChatColor.GRAY + " Log in met /login [wachtwoord]."
+                : "Je bent niet geregistreerd." + ChatColor.GRAY + " Registreer met /register [wachtwoord]."));
     }
 }
