@@ -10,6 +10,8 @@ import net.robbytu.banjoserver.bungee.Main;
 public class MuteChatListener implements Listener {
     @EventHandler
     public static void handleChat(ChatEvent event) {
+        if(event.isCommand()) return;
+
         ProxiedPlayer sender = null;
 
         for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
