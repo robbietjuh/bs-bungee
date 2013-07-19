@@ -3,8 +3,10 @@ package net.robbytu.banjoserver.bungee.mail;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 
 public class MailLoginHandler implements Listener {
+    @EventHandler
     public static void handleLoginEvent(PostLoginEvent event) {
         Mail[] mails = Mails.getMailForUser(event.getPlayer().getName(), 0);
         if(mails.length > 0) {
