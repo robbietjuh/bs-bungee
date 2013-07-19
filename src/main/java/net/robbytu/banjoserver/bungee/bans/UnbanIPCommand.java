@@ -23,7 +23,7 @@ public class UnbanIPCommand extends Command {
             return;
         }
 
-        Ban[] bans = Bans.getUserBans(args[0], true);
+        Ban[] bans = Bans.getUserBans("/" + args[0], true);
         for (Ban ban : bans) {
             ban.active = false;
             Bans.updateUserBan(ban);

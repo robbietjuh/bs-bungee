@@ -16,7 +16,7 @@ public class Mails {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, from_user, to_user, date, message, unread FROM bs_mail WHERE to_user = ? AND removed = 0 LIMIT " + (10*(page+1)) + ",10");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, from_user, to_user, date, message, unread FROM bs_mail WHERE to_user LIKE ? AND removed = 0 ORDER BY id DESC LIMIT " + (10*page) + ",10");
             statement.setString(1, user);
             ResultSet result = statement.executeQuery();
 
@@ -84,7 +84,7 @@ public class Mails {
         try {
             Connection conn = Main.conn;
 
-            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET removed = 1 WHERE to_user = ?");
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_mail SET removed = 1 WHERE to_user LIKE ?");
             statement.setString(1, name);
             statement.executeUpdate();
         }

@@ -41,7 +41,7 @@ public class TicketCommand extends Command {
                 return;
             }
 
-            if(ticket.status.equalsIgnoreCase("open")) {
+            if(!ticket.status.equalsIgnoreCase("open")) {
                 this.failCommand(sender, "This ticket is " + ticket.status + ". It should be open for you to accept it.");
                 return;
             }
@@ -81,7 +81,7 @@ public class TicketCommand extends Command {
             if(sender.hasPermission("bs.admin") || sender.hasPermission("bs.helper")) sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
             sender.sendMessage(" ");
         }
-        else if(args[0].equalsIgnoreCase("close")) {
+        else if(args[0].equalsIgnoreCase("close") || args[0].equalsIgnoreCase("leave")) {
             if(Tickets.inTicket(sender.getName())) {
                 Ticket ticket = Tickets.getCurrentTicketForUser(sender.getName());
 
@@ -92,6 +92,9 @@ public class TicketCommand extends Command {
                 ticket.date_resolved = (int) (System.currentTimeMillis() / 1000L);
 
                 Tickets.updateTicket(ticket);
+
+                Tickets.usersInTicket.remove(ticket.username);
+                Tickets.usersInTicket.remove(ticket.admin);
             }
         }
     }

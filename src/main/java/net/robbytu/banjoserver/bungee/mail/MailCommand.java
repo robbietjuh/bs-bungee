@@ -13,7 +13,7 @@ public class MailCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(args.length > 3 && args[0].equalsIgnoreCase("send")) {
+        if(args.length > 2 && args[0].equalsIgnoreCase("send")) {
             Mail mail = new Mail();
 
             String message = "";
@@ -27,7 +27,7 @@ public class MailCommand extends Command {
 
             sender.sendMessage(ChatColor.GREEN + "Bericht is verstuurd.");
         }
-        else if(args.length == 0 || ((args.length == 1 || args.length == 2) && args[0] == "read")) {
+        else if(args.length == 0 || ((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("read"))) {
             Mail[] mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
 
             if(mails.length == 0) {
@@ -38,7 +38,7 @@ public class MailCommand extends Command {
             sender.sendMessage(ChatColor.AQUA + "Berichten" + ((args.length == 2) ? " - Pagina " + args[1] : ""));
 
             for(Mail mail : mails) {
-                sender.sendMessage(ChatColor.GRAY + "" + ((mail.unread) ? ChatColor.BOLD : "") + mail.from_user + ": " + mail.message);
+                sender.sendMessage(((mail.unread) ? ChatColor.WHITE : ChatColor.GRAY) + "" + ((mail.unread) ? ChatColor.BOLD : "") + mail.from_user + ": " + mail.message);
 
                 if(mail.unread) {
                     mail.unread = false;
@@ -46,7 +46,7 @@ public class MailCommand extends Command {
                 }
             }
         }
-        else if(args.length == 1 && args[0] == "clear") {
+        else if(args.length == 1 && args[0].equalsIgnoreCase("clear")) {
             Mails.clearMailboxForUser(sender.getName());
             sender.sendMessage(ChatColor.GREEN + "Mailbox leeggemaakt.");
         }

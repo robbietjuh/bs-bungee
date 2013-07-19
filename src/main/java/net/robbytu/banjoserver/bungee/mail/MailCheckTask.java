@@ -19,6 +19,6 @@ public class MailCheckTask implements Runnable {
             }
         }
 
-        Main.instance.getProxy().getScheduler().schedule(Main.instance, new MailCheckTask(), 300, TimeUnit.SECONDS);
+        Main.instance.getProxy().getScheduler().schedule(Main.instance, new MailCheckTask(), 60, TimeUnit.SECONDS);
     }
 }

@@ -8,6 +8,7 @@ import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.directsupport.ReminderTask;
 import net.robbytu.banjoserver.bungee.directsupport.TicketCommand;
+import net.robbytu.banjoserver.bungee.directsupport.TicketLogoutHandler;
 import net.robbytu.banjoserver.bungee.donate.DonateCommand;
 import net.robbytu.banjoserver.bungee.donate.DonateUtil;
 import net.robbytu.banjoserver.bungee.donate.SmsCommand;
@@ -17,7 +18,9 @@ import net.robbytu.banjoserver.bungee.listeners.ChatListener;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
 import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
+import net.robbytu.banjoserver.bungee.mail.MailCommand;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
+import net.robbytu.banjoserver.bungee.mute.MuteCommand;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
@@ -80,10 +83,13 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new DonateCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new SmsCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TicketCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new MailCommand());
     }
 
     private void registerListeners() {
         ProxyServer.getInstance().getPluginManager().registerListener(this, new LoginListener());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new TicketLogoutHandler());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new PluginMessageListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new ChatListener());
         ProxyServer.getInstance().getPluginManager().registerListener(this, new MailLoginHandler());
@@ -92,7 +98,7 @@ public class Main extends Plugin {
     private void registerSchedulers() {
         ProxyServer.getInstance().getScheduler().schedule(this, new BroadcastTask(), 300, TimeUnit.SECONDS);
         ProxyServer.getInstance().getScheduler().schedule(this, new ReminderTask(), 60, TimeUnit.SECONDS);
-        ProxyServer.getInstance().getScheduler().schedule(this, new MailCheckTask(), 300, TimeUnit.SECONDS);
+        ProxyServer.getInstance().getScheduler().schedule(this, new MailCheckTask(), 60, TimeUnit.SECONDS);
     }
 
     private void registerChannels() {

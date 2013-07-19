@@ -23,14 +23,14 @@ public class TempBanCommand extends Command {
             return;
         }
 
-        String reasonBody = "";
-        for (int i = 2; i < args.length - 2; i++) reasonBody += args[i];
+        String reasonBody = "Tempban (" + args[1] + " sec.):";
+        for (int i = 2; i < args.length; i++) reasonBody += " " + args[i];
 
         Ban ban = new Ban();
         ban.username = args[0];
         ban.reason = reasonBody;
         ban.mod = sender.getName();
-        ban.tempban = ban.date + Integer.getInteger(args[1]);
+        ban.tempban = ban.date + Integer.parseInt(args[1]);
 
         Bans.banUser(ban);
     }

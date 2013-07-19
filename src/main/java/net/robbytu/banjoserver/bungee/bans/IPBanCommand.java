@@ -10,7 +10,7 @@ public class IPBanCommand extends Command {
     private final String usage = "/ipban [user/ip] [reason]";
 
     public IPBanCommand() {
-        super("ipban");
+        super("ipban", null, "banip");
     }
 
     @Override
@@ -28,10 +28,10 @@ public class IPBanCommand extends Command {
         if(Main.instance.getProxy().getPlayer(args[0]) != null) args[0] = Main.instance.getProxy().getPlayer(args[0]).getAddress().getAddress().toString();
 
         String reasonBody = "";
-        for (int i = 0; i < args.length - 1; i++) reasonBody += args[i];
+        for (int i = 1; i < args.length; i++) reasonBody += (reasonBody.equals("") ? "" : " " ) + args[i];
 
         Ban ban = new Ban();
-        ban.username = args[0];
+        ban.username = (args[0].substring(0, 1).equals("/") ? "" : "/") + args[0];
         ban.reason = "IP ban: " + reasonBody;
         ban.mod = sender.getName();
 
