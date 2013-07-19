@@ -17,7 +17,7 @@ public class ListCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.BLUE + "Er zijn " + ChatColor.BOLD + Main.instance.getProxy().getOnlineCount() + ChatColor.RESET + "" + ChatColor.GREEN + "/" + ((ListenerInfo) Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + " spelers online.");
+        sender.sendMessage(ChatColor.GREEN + "Er zijn " + ChatColor.BOLD + Main.instance.getProxy().getOnlineCount() + ChatColor.RESET + "" + ChatColor.GREEN + "/" + ((ListenerInfo) Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + " spelers online.");
 
         for(ServerInfo info : Main.instance.getProxy().getServers().values()) {
             sender.sendMessage(ChatColor.GRAY + info.getName() + ": " + info.getPlayers().size() + " online");
