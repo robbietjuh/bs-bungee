@@ -31,9 +31,9 @@ public class KickCommand extends Command {
         }
 
         String reasonBody = "";
-        for (int i = 1; i < args.length - 1; i++) reasonBody += args[i];
+        for (int i = 1; i < args.length; i++) reasonBody += (reasonBody.equals("") ? "" : " ") + args[i];
 
-        Main.instance.getProxy().getPlayer(args[0]).disconnect("Je werd gekicked: " + reasonBody);
+        Main.instance.getProxy().getPlayer(args[0]).disconnect(ChatColor.RED + "" + ChatColor.BOLD + "Je werd gekicked:\n\n" + ChatColor.WHITE + reasonBody);
 
         for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
             if(player.hasPermission("bs.admin")) {
