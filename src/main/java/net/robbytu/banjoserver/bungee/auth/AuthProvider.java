@@ -2,6 +2,7 @@ package net.robbytu.banjoserver.bungee.auth;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.PluginMessager;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -47,6 +48,7 @@ public class AuthProvider {
     public static boolean authenticate(ProxiedPlayer player, String providedPassword) {
         if(checkPassword(player, providedPassword)) {
             authenticatedUsers.add(player);
+            PluginMessager.sendMessage(player.getServer(), "PlayerAuthInfo", player.getName(), "authenticated");
             return true;
         }
         return false;
@@ -64,6 +66,9 @@ public class AuthProvider {
             statement.setString(2, hashed_password);
             statement.setString(3, player.getAddress().getAddress().toString());
             statement.executeUpdate();
+
+            authenticatedUsers.add(player);
+            PluginMessager.sendMessage(player.getServer(), "PlayerAuthInfo", player.getName(), "authenticated");
 
             return true;
         }
@@ -93,6 +98,7 @@ public class AuthProvider {
 
     public static void unauthenticatePlayer(ProxiedPlayer player) {
         authenticatedUsers.remove(player);
+        PluginMessager.sendMessage(player.getServer(), "PlayerAuthInfo", player.getName(), "unauthorized");
     }
 
     public static boolean isRegistered(String username) {
