@@ -3,7 +3,9 @@ package net.robbytu.banjoserver.bungee;
 import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationException;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
+import net.robbytu.banjoserver.bungee.auth.ChangePasswordCommand;
 import net.robbytu.banjoserver.bungee.auth.LoginCommand;
+import net.robbytu.banjoserver.bungee.auth.RegisterCommand;
 import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
 import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
@@ -87,6 +89,8 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MuteCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MailCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new LoginCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new RegisterCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new ChangePasswordCommand());
     }
 
     private void registerListeners() {
