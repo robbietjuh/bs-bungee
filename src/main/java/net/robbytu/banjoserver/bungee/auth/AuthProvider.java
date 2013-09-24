@@ -21,11 +21,11 @@ public class AuthProvider {
         return (authenticatedUsers.contains(player));
     }
 
-    public static boolean authenticate(ProxiedPlayer player, String providedPassword) {
+    public static boolean checkPassword(ProxiedPlayer player, String providedPassword) {
         Connection conn = Main.conn;
 
         try {
-            PreparedStatement statement = conn.prepareStatement("SELECT password FROM bs_auth WHERE username = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT password FROM bs_auth WHERE username LIKE ?");
             statement.setString(1, player.getName());
             ResultSet result = statement.executeQuery();
 
@@ -35,13 +35,20 @@ public class AuthProvider {
                 String hashed_password = "$SHA$" + salt + "$" + getSHA256(getSHA256(providedPassword) + salt);
 
                 if(password.equals(hashed_password)) {
-                    authenticatedUsers.add(player);
                     return true;
                 }
             }
         }
         catch(Exception ignored) {}
 
+        return false;
+    }
+
+    public static boolean authenticate(ProxiedPlayer player, String providedPassword) {
+        if(checkPassword(player, providedPassword)) {
+            authenticatedUsers.add(player);
+            return true;
+        }
         return false;
     }
 
@@ -65,6 +72,25 @@ public class AuthProvider {
         return false;
     }
 
+    public static boolean updatePassword(ProxiedPlayer player, String password) {
+        Connection conn = Main.conn;
+
+        try {
+            String salt = createSalt(16);
+            String hashed_password = "$SHA$" + salt + "$" + getSHA256(getSHA256(password) + salt);
+
+            PreparedStatement statement = conn.prepareStatement("UPDATE bs_auth SET password = ? WHERE username LIKE ?");
+            statement.setString(1, player.getName());
+            statement.setString(2, hashed_password);
+            statement.executeUpdate();
+
+            return true;
+        }
+        catch(Exception ignored) {}
+
+        return false;
+    }
+
     public static void unauthenticatePlayer(ProxiedPlayer player) {
         authenticatedUsers.remove(player);
     }
@@ -73,7 +99,7 @@ public class AuthProvider {
         Connection conn = Main.conn;
 
         try {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM bs_auth WHERE username = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM bs_auth WHERE username LIKE ?");
             statement.setString(1, username);
             ResultSet result = statement.executeQuery();
 
