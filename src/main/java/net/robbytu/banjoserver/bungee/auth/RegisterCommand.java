@@ -22,6 +22,11 @@ public class RegisterCommand extends Command {
             return;
         }
 
+        if(args[0].length() < 3) {
+            sender.sendMessage(ChatColor.RED + "Het opgegeven wachtwoord is te kort.");
+            return;
+        }
+
         if(AuthProvider.isRegistered(sender.getName())) {
             sender.sendMessage(ChatColor.RED + "Dit account is al geregistreerd.");
             sender.sendMessage(ChatColor.GRAY + "Gebruik /login [wachtwoord] om in te loggen.");
