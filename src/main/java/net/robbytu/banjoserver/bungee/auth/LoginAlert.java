@@ -7,29 +7,27 @@ import net.robbytu.banjoserver.bungee.Main;
 
 import java.util.concurrent.TimeUnit;
 
-public class LoginAlert  implements Runnable {
-    private ProxiedPlayer target;
+public class LoginAlert {
+    public static void handle(final LoginEvent event) {
+        Main.instance.getProxy().getScheduler().schedule(Main.instance, new Runnable() {
+            @Override
+            public void run() {
+                final ProxiedPlayer target = Main.instance.getProxy().getPlayer(event.getConnection().getName());
+                boolean registered = AuthProvider.isRegistered(target.getName());
 
-    public LoginAlert() {}
+                target.sendMessage(ChatColor.GREEN + "Welkom " + ((registered) ? "terug " : "") + "in de Banjoserver, " + target.getName() + "!");
+                target.sendMessage(ChatColor.GRAY + "Gebruik " + ((registered) ? ChatColor.WHITE + "/login [wachtwoord]" + ChatColor.GRAY + " om in te loggen." : ChatColor.WHITE + "/register [wachtwoord]" + ChatColor.GRAY + " om te registreren."));
+                target.sendMessage(" ");
 
-    public LoginAlert(ProxiedPlayer target) {
-        this.target = target;
-    }
-
-    public void run() {
-        if(!AuthProvider.isAuthenticated(this.target)) {
-            this.target.disconnect("Om overbelasting van onze servers te voorkomen moet je binnen 30 seconden inloggen.");
-        }
-    }
-
-    public static void handle(LoginEvent event) {
-        ProxiedPlayer target = Main.instance.getProxy().getPlayer(event.getConnection().getName());
-        Main.instance.getProxy().getScheduler().schedule(Main.instance, new LoginAlert(target), 30, TimeUnit.SECONDS);
-
-        boolean registered = AuthProvider.isRegistered(target.getName());
-
-        target.sendMessage(ChatColor.GREEN + "Welkom " + ((registered) ? "terug " : "") + "in de Banjoserver, " + target.getName() + "!");
-        target.sendMessage(ChatColor.GRAY + "Gebruik " + ((registered) ? ChatColor.WHITE + "/login [wachtwoord]" + ChatColor.GRAY + " om in te loggen." : ChatColor.WHITE + "/register [wachtwoord]" + ChatColor.GRAY + " om te registreren."));
-        target.sendMessage(" ");
+                Main.instance.getProxy().getScheduler().schedule(Main.instance, new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!AuthProvider.isAuthenticated(target)) {
+                            target.disconnect("Om overbelasting van onze servers te voorkomen moet je binnen 30 seconden inloggen.");
+                        }
+                    }
+                }, 29, TimeUnit.SECONDS);
+            }
+        }, 1, TimeUnit.SECONDS);
     }
 }
