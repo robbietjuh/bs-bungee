@@ -3,9 +3,10 @@ package net.robbytu.banjoserver.bungee.consoles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
+import net.robbytu.banjoserver.bungee.Main;
 
 public class ConsoleCommand extends Command {
-    private final String usage = "/console [on/off] [server]";
+    private final String usage = "/console [on/off]";
 
     public ConsoleCommand() {
         super("console");
@@ -18,17 +19,8 @@ public class ConsoleCommand extends Command {
             return;
         }
 
-        if(args.length == 0) {
-            sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.YELLOW + "Your current settings:");
-            for(String[] settings : ConsoleSettings.getSettings(sender.getName().toLowerCase())) {
-                sender.sendMessage(ChatColor.GRAY + " * " + ChatColor.WHITE + "" + settings[0] + ": " + ((settings[1].equalsIgnoreCase("on")) ? ChatColor.GREEN + "Listening" : ChatColor.RED + "Muted"));
-            }
-            sender.sendMessage(" ");
-        }
-
-        if(args.length != 2) {
-            this.failCommand(sender, "Need at least 2 arguments.");
+        if(args.length == 1) {
+            this.failCommand(sender, "Need at least 1 argument.");
             return;
         }
 
@@ -38,13 +30,13 @@ public class ConsoleCommand extends Command {
         }
 
         if(args[0].equalsIgnoreCase("on")) {
-            ConsoleSettings.turnOn(sender.getName().toLowerCase(), args[1]);
-            sender.sendMessage(ChatColor.GRAY + "Turned on Console for server " + args[1]);
+            ConsoleSettings.turnOn(Main.instance.getProxy().getPlayer(sender.getName()));
+            sender.sendMessage(ChatColor.GRAY + "Turned on Consoles");
         }
 
         if(args[0].equalsIgnoreCase("off")) {
-            ConsoleSettings.turnOff(sender.getName().toLowerCase(), args[1]);
-            sender.sendMessage(ChatColor.GRAY + "Turned off Console for server " + args[1]);
+            ConsoleSettings.turnOff(Main.instance.getProxy().getPlayer(sender.getName()));
+            sender.sendMessage(ChatColor.GRAY + "Turned off Consoles");
         }
     }
 
