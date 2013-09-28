@@ -19,4 +19,8 @@ public class ConsoleSettings {
     public static boolean isListening(ProxiedPlayer player) {
         return listeningPlayers.contains(player);
     }
+
+    public static Object[] getListeners() {
+        return listeningPlayers.toArray();
+    }
 }
