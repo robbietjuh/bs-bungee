@@ -19,7 +19,7 @@ public class ConsoleCommand extends Command {
             return;
         }
 
-        if(args.length == 1) {
+        if(args.length != 1) {
             this.failCommand(sender, "Need at least 1 argument.");
             return;
         }

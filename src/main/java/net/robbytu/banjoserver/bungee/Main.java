@@ -9,6 +9,7 @@ import net.robbytu.banjoserver.bungee.auth.LoginCommand;
 import net.robbytu.banjoserver.bungee.auth.RegisterCommand;
 import net.robbytu.banjoserver.bungee.automessages.BroadcastTask;
 import net.robbytu.banjoserver.bungee.bans.*;
+import net.robbytu.banjoserver.bungee.consoles.ConsoleCommand;
 import net.robbytu.banjoserver.bungee.directsupport.HelpCommand;
 import net.robbytu.banjoserver.bungee.directsupport.ReminderTask;
 import net.robbytu.banjoserver.bungee.directsupport.TicketCommand;
@@ -92,6 +93,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new LoginCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new RegisterCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ChangePasswordCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new ConsoleCommand());
     }
 
     private void registerListeners() {
