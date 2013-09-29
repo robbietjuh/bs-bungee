@@ -28,5 +28,8 @@ public class MsgCommand extends Command {
 
         sender.sendMessage(ChatColor.GRAY + "[" + sender.getName() + " -> " + args[0] + "] " + message);
         Main.instance.getProxy().getPlayer(args[0]).sendMessage(ChatColor.GRAY + "[" + sender.getName() + " -> " + args[0] + "] " + message);
+
+        if(PmSession.replyTo.containsKey(Main.instance.getProxy().getPlayer(args[0]))) PmSession.replyTo.remove(Main.instance.getProxy().getPlayer(args[0]));
+        PmSession.replyTo.put(Main.instance.getProxy().getPlayer(args[0]), Main.instance.getProxy().getPlayer(sender.getName()));
     }
 }
