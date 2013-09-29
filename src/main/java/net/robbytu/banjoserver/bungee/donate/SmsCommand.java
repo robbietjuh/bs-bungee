@@ -36,7 +36,7 @@ public class SmsCommand extends Command {
 
             sender.sendMessage("");
             sender.sendMessage(ChatColor.BOLD + "" + ChatColor.AQUA + donation.title + " - " + Main.instance.getProxy().getPlayer(sender.getName()).getServer().getInfo().getName() + " server");
-            sender.sendMessage(ChatColor.GRAY + "Sms " + ChatColor.BOLD + ChatColor.WHITE + "BETAAL " + donation.code + ChatColor.RESET + ChatColor.GRAY + " naar " + ChatColor.BOLD + ChatColor.WHITE + "3030" + ChatColor.RESET + ChatColor.GRAY + ". Dit kost eenmalig €" + DonateUtil.prices.get(donation.code) + ". Voer de ontvangen code vervolgens in met " + ChatColor.RESET + ChatColor.WHITE + "/sms " + donation.tag + " [code]" + ChatColor.RESET + ChatColor.GRAY + " om je donatie te voltooien.");
+            sender.sendMessage(ChatColor.GRAY + "Sms " + ChatColor.BOLD + ChatColor.WHITE + "BETAAL " + donation.code + ChatColor.RESET + ChatColor.GRAY + " naar " + ChatColor.BOLD + ChatColor.WHITE + "3010" + ChatColor.RESET + ChatColor.GRAY + ". Dit kost eenmalig €" + DonateUtil.prices.get(donation.code) + ". Voer de ontvangen code vervolgens in met " + ChatColor.RESET + ChatColor.WHITE + "/sms " + donation.tag + " [code]" + ChatColor.RESET + ChatColor.GRAY + " om je donatie te voltooien.");
             sender.sendMessage("");
         }
 
@@ -58,7 +58,7 @@ public class SmsCommand extends Command {
             Main.instance.getProxy().getScheduler().runAsync(Main.instance, new Runnable() {
                 public void run() {
                     try {
-                        URLConnection connection = new URL("http://www.targetpay.com/api/sms-pincode?rtlo=" + Main.config.targetpay_rtlo + "&keyword=" + finalDonation.code + "&code=" + args[0] + "&shortcode=3030&country=31").openConnection();
+                        URLConnection connection = new URL("http://www.targetpay.com/api/sms-pincode?rtlo=" + Main.config.targetpay_rtlo + "&keyword=BETAAL+" + finalDonation.code + "&code=" + args[1] + "&shortcode=3010&country=31").openConnection();
                         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
                         String[] response = in.readLine().split(" ");
