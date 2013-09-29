@@ -7,4 +7,5 @@ public class Donation {
     public String code = "";
     public String server = "";
     public String tag = "";
+    public int expires = 0;
 }

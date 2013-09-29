@@ -18,7 +18,7 @@ public class DonateUtil {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT id, title, description, code, server, tag FROM bs_donations WHERE server = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT id, title, description, code, server, tag, expires FROM bs_donations WHERE server = ?");
             statement.setString(1, server);
             ResultSet result = statement.executeQuery();
 
@@ -34,6 +34,7 @@ public class DonateUtil {
                 donation.code = result.getString(4);
                 donation.server = result.getString(5);
                 donation.tag = result.getString(6);
+                donation.expires = result.getInt(7);
 
                 // Add donation to return array
                 donations.add(donation);
@@ -70,7 +71,7 @@ public class DonateUtil {
 
         try {
             // Create a new select statement
-            PreparedStatement statement = conn.prepareStatement("SELECT task FROM bs_donation_tasks WHERE donation = ?");
+            PreparedStatement statement = conn.prepareStatement("SELECT task FROM bs_donation_tasks WHERE donation = ? AND action = 1");
             statement.setInt(1, donation.id);
             ResultSet result = statement.executeQuery();
 
@@ -89,6 +90,17 @@ public class DonateUtil {
 
                 statement.executeUpdate();
             }
+
+            // Add donation to database
+            statement = conn.prepareStatement("INSERT INTO bs_donators (username, donation, date, expires, expired) VALUES (?, ?, ?, ?, ?)");
+
+            statement.setString(1, username);
+            statement.setInt(2, donation.id);
+            statement.setInt(3, (int) (System.currentTimeMillis() / 1000L));
+            statement.setInt(4, ((donation.expires > 0) ? ((int) (System.currentTimeMillis() / 1000L)) + donation.expires : 0));
+            statement.setInt(5, 0);
+
+            statement.executeUpdate();
 
         } catch (Exception ignored) {}
     }
