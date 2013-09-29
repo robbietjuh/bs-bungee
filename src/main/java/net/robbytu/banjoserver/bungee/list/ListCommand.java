@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.config.ListenerInfo;
 import net.md_5.bungee.api.config.ServerInfo;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
 
@@ -17,10 +18,12 @@ public class ListCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.GREEN + "Er zijn " + ChatColor.BOLD + Main.instance.getProxy().getOnlineCount() + ChatColor.RESET + "" + ChatColor.GREEN + "/" + ((ListenerInfo) Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + " spelers online.");
+        sender.sendMessage(ChatColor.GOLD + "Er zijn " + ChatColor.RED + Main.instance.getProxy().getOnlineCount() + ChatColor.GOLD + " van maximaal " + ChatColor.RED + ((ListenerInfo) Main.instance.getProxy().getConfigurationAdapter().getListeners().toArray()[0]).getMaxPlayers() + ChatColor.GOLD + " spelers online.");
 
         for(ServerInfo info : Main.instance.getProxy().getServers().values()) {
-            sender.sendMessage(ChatColor.GRAY + info.getName() + ": " + info.getPlayers().size() + " online");
+            String onlineUsers = "";
+            for(ProxiedPlayer player : info.getPlayers()) onlineUsers += ((onlineUsers.equals("")) ? "" : ", ") + player.getName();
+            sender.sendMessage(info.getName() + ": " + onlineUsers);
         }
 
         sender.sendMessage(" ");
