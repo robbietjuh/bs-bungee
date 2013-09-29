@@ -38,7 +38,7 @@ public class ReplyCommand extends Command {
         for (int i = 0; i < args.length; i++) message += ((message.equals("")) ? "" : " ") + args[i];
 
         sender.sendMessage(ChatColor.GRAY + "[" + sender.getName() + " -> " + receiver.getName() + "] " + message);
-        Main.instance.getProxy().getPlayer(args[0]).sendMessage(ChatColor.GRAY + "[" + sender.getName() + " -> " + receiver.getName() + "] " + message);
+        receiver.sendMessage(ChatColor.GRAY + "[" + sender.getName() + " -> " + receiver.getName() + "] " + message);
 
         if(PmSession.replyTo.containsKey(receiver)) PmSession.replyTo.remove(receiver);
         PmSession.replyTo.put(receiver, Main.instance.getProxy().getPlayer(sender.getName()));
