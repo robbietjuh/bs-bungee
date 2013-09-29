@@ -22,6 +22,7 @@ public class LoginAlert {
                 Main.instance.getProxy().getScheduler().schedule(Main.instance, new Runnable() {
                     @Override
                     public void run() {
+                        if(target == null) return; //BS-89
                         if(!AuthProvider.isAuthenticated(target)) {
                             target.disconnect("Om overbelasting van onze servers te voorkomen moet je binnen 30 seconden inloggen.");
                         }
