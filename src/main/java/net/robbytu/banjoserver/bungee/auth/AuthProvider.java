@@ -61,7 +61,7 @@ public class AuthProvider {
             String salt = createSalt(16);
             String hashed_password = "$SHA$" + salt + "$" + getSHA256(getSHA256(password) + salt);
 
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_auth (username, password, ip) VALUES (?, ?, ?)");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO bs_auth (username, password, ip, lastlogin) VALUES (?, ?, ?, 0)");
             statement.setString(1, player.getName());
             statement.setString(2, hashed_password);
             statement.setString(3, player.getAddress().getAddress().toString());
