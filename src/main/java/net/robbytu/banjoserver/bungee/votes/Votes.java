@@ -6,6 +6,7 @@ import net.robbytu.banjoserver.bungee.Main;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Votes {
     public static void handleVote(Vote vote) {
@@ -47,6 +48,32 @@ public class Votes {
     }
 
     public static Vote[] openVotes() {
-        return null;
+        Connection conn = Main.conn;
+        ArrayList<Vote> votes = new ArrayList<Vote>();
+
+        try {
+            PreparedStatement statement = conn.prepareStatement("SELECT username, serviceName, address, timestamp FROM bs_votes WHERE timestamp < ? AND redeemed = ?");
+
+            statement.setInt(1, (int) ((int) System.currentTimeMillis() / 1000L));
+            statement.setInt(2, 0);
+
+            ResultSet result = statement.executeQuery();
+
+            while(result.next()) {
+                Vote vote = new Vote();
+
+                vote.username = result.getString(1);
+                vote.serviceName = result.getString(2);
+                vote.address = result.getString(3);
+                vote.timestamp = result.getInt(4);
+
+                votes.add(vote);
+            }
+
+            return votes.toArray(new Vote[votes.size()]);
+        }
+        catch(Exception ignored) {
+            return null;
+        }
     }
 }
