@@ -31,6 +31,7 @@ import net.robbytu.banjoserver.bungee.pm.ReplyCommand;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
+import net.robbytu.banjoserver.bungee.tp.TpHereCommand;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -83,6 +84,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanIPCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UnbanCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpHereCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpAcceptCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new TpDenyCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new HelpCommand());
