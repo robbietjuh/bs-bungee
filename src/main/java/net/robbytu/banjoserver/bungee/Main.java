@@ -36,6 +36,7 @@ import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
 import net.robbytu.banjoserver.bungee.tp.TpHereCommand;
+import net.robbytu.banjoserver.bungee.votes.VoteCheckTask;
 import net.robbytu.banjoserver.bungee.votes.VoteReceiver;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
@@ -128,6 +129,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getScheduler().schedule(this, new BroadcastTask(), 300, TimeUnit.SECONDS);
         ProxyServer.getInstance().getScheduler().schedule(this, new ReminderTask(), 60, TimeUnit.SECONDS);
         ProxyServer.getInstance().getScheduler().schedule(this, new MailCheckTask(), 60, TimeUnit.SECONDS);
+        ProxyServer.getInstance().getScheduler().schedule(this, new VoteCheckTask(), 300, TimeUnit.SECONDS);
     }
 
     private void registerChannels() {
