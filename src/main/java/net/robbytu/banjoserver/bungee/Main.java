@@ -22,6 +22,8 @@ import net.robbytu.banjoserver.bungee.list.ListCommand;
 import net.robbytu.banjoserver.bungee.listeners.ChatListener;
 import net.robbytu.banjoserver.bungee.listeners.LoginListener;
 import net.robbytu.banjoserver.bungee.listeners.PluginMessageListener;
+import net.robbytu.banjoserver.bungee.logger.IPLogCommand;
+import net.robbytu.banjoserver.bungee.logger.UserLogCommand;
 import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
 import net.robbytu.banjoserver.bungee.mail.MailCommand;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
@@ -100,6 +102,8 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ConsoleCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MsgCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReplyCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new UserLogCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPLogCommand());
     }
 
     private void registerListeners() {
