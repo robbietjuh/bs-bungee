@@ -5,7 +5,6 @@ import net.robbytu.banjoserver.bungee.Main;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class UserLogger {
     public static void logLogin(final LoginEvent event) {
