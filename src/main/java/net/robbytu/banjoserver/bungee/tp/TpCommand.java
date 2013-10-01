@@ -9,7 +9,7 @@ public class TpCommand extends Command {
     private final String usage = "/tp [user]";
 
     public TpCommand() {
-        super("tp", null, "tpa");
+        super("tp", null, "tpa", "call");
     }
 
     @Override
@@ -34,8 +34,18 @@ public class TpCommand extends Command {
             return;
         }
 
-        TeleportUtil.requestTeleport(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]));
-        sender.sendMessage(ChatColor.GRAY + "Er is een verzoek verstuurd naar " + args[0] + "...");
+        if(!sender.hasPermission("bs.admin")) {
+            TeleportUtil.requestTeleport(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]));
+            sender.sendMessage(ChatColor.GRAY + "Er is een verzoek verstuurd naar " + args[0] + "...");
+        }
+        else {
+            TeleportUtil.requests.put(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]));
+            TeleportUtil.targets.put(Main.instance.getProxy().getPlayer(args[0]), Main.instance.getProxy().getPlayer(sender.getName()));
+
+            TeleportUtil.acceptRequest(Main.instance.getProxy().getPlayer(args[0]));
+
+            sender.sendMessage(ChatColor.GRAY + "Teleporteren...");
+        }
     }
 
     private void failCommand(CommandSender sender, String message) {

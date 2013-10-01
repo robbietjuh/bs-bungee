@@ -7,8 +7,8 @@ import net.robbytu.banjoserver.bungee.PluginMessager;
 import java.util.HashMap;
 
 public class TeleportUtil {
-    private static HashMap<ProxiedPlayer, ProxiedPlayer> requests = new HashMap<ProxiedPlayer, ProxiedPlayer>();
-    private static HashMap<ProxiedPlayer, ProxiedPlayer> targets = new HashMap<ProxiedPlayer, ProxiedPlayer>();
+    public static HashMap<ProxiedPlayer, ProxiedPlayer> requests = new HashMap<ProxiedPlayer, ProxiedPlayer>();
+    public static HashMap<ProxiedPlayer, ProxiedPlayer> targets = new HashMap<ProxiedPlayer, ProxiedPlayer>();
     public static HashMap<ProxiedPlayer, Integer> timings = new HashMap<ProxiedPlayer, Integer>();
 
     public static boolean isAwaitingApproval(ProxiedPlayer sender, ProxiedPlayer target) {
@@ -33,6 +33,10 @@ public class TeleportUtil {
     }
 
     public static boolean acceptRequest(ProxiedPlayer target) {
+        return acceptRequest(target, false);
+    }
+
+    public static boolean acceptRequest(ProxiedPlayer target, boolean asAdmin) {
         ProxiedPlayer sender = targets.get(target);
         if(sender == null) return false;
 
@@ -54,11 +58,9 @@ public class TeleportUtil {
         requests.remove(sender);
 
         sender.sendMessage(ChatColor.GRAY + "Teleporteren...");
-        target.sendMessage(ChatColor.GRAY + "Teleporteren...");
+        if(!asAdmin) target.sendMessage(ChatColor.GRAY + "Teleporteren...");
 
-        if(!target.getServer().getInfo().equals(sender.getServer().getInfo())) {
-            sender.connect(target.getServer().getInfo());
-        }
+        if(!target.getServer().getInfo().equals(sender.getServer().getInfo())) sender.connect(target.getServer().getInfo());
 
         PluginMessager.sendMessage(target.getServer(), "teleport", sender.getName(), target.getName());
 
