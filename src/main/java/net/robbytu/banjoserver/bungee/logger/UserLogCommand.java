@@ -10,11 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 
-public class IPLogCommand extends Command {
-    private final String usage = "/ids-for-ip [ip]";
+public class UserLogCommand extends Command {
+    private final String usage = "/ips-for-id [username]";
 
-    public IPLogCommand() {
-        super("ids-for-ip", null, "iplog");
+    public UserLogCommand() {
+        super("ips-for-ip", null, "userlog", "ips-for-user");
     }
 
     @Override
@@ -32,17 +32,17 @@ public class IPLogCommand extends Command {
         final Connection conn = Main.conn;
 
         try {
-            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT(username), login_time FROM bs_logins WHERE ip = ? ORDER BY id DESC");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT(ip), login_time FROM bs_logins WHERE username LIKE ? ORDER BY id DESC");
             statement.setString(1, '/' + args[0]);
             ResultSet result = statement.executeQuery();
 
             sender.sendMessage(" ");
-            sender.sendMessage(ChatColor.YELLOW + "Volgende users zijn ingelogd geweest op " + args[0]);
+            sender.sendMessage(ChatColor.YELLOW + args[0] + " is ingelogd geweest met de volgende IP adressen:");
             while(result.next()) {
                 SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ii");
                 String date = sdf.format(result.getInt(1));
 
-                sender.sendMessage(ChatColor.GRAY + " * " + ChatColor.WHITE + result.getString(1) + ChatColor.GRAY + " (laatste login " + date + ")");
+                sender.sendMessage(ChatColor.GRAY + " * " + ChatColor.WHITE + result.getString(1).substring(1) + ChatColor.GRAY + " (laatste login " + date + ")");
             }
             sender.sendMessage(" ");
         }
