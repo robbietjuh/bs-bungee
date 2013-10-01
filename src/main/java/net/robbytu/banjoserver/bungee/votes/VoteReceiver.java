@@ -50,7 +50,7 @@ public class VoteReceiver extends Thread {
     private boolean running = true;
     private KeyPair keyPair;
 
-    public VoteReceiver(String host, int port) throws Exception {
+    public VoteReceiver(String host, int port) {
         this.host = host;
         this.port = port;
 

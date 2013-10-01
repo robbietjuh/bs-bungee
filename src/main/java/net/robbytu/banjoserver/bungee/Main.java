@@ -2,6 +2,7 @@ package net.robbytu.banjoserver.bungee;
 
 import net.craftminecraft.bungee.bungeeyaml.bukkitapi.InvalidConfigurationException;
 import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.config.ListenerInfo;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.robbytu.banjoserver.bungee.auth.AuthStateAnnouncer;
 import net.robbytu.banjoserver.bungee.auth.ChangePasswordCommand;
@@ -35,6 +36,7 @@ import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
 import net.robbytu.banjoserver.bungee.tp.TpCommand;
 import net.robbytu.banjoserver.bungee.tp.TpDenyCommand;
 import net.robbytu.banjoserver.bungee.tp.TpHereCommand;
+import net.robbytu.banjoserver.bungee.votes.VoteReceiver;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
 
 import java.sql.Connection;
@@ -46,6 +48,8 @@ public class Main extends Plugin {
     public static Main instance;
     public static PluginConfig config;
     public static Connection conn;
+
+    private static VoteReceiver voteReceiver;
 
     public void onLoad() {
         instance = this;
@@ -76,6 +80,9 @@ public class Main extends Plugin {
 
         getLogger().info("Populating statics...");
         this.populateStatics();
+
+        getLogger().info("Starting VoteReceiver...");
+        this.startVoteReceiver();
     }
 
     private void registerCommands() {
@@ -129,6 +136,16 @@ public class Main extends Plugin {
 
     private void populateStatics() {
         DonateUtil.populateStatics();
+    }
+
+    private void startVoteReceiver() {
+        this.voteReceiver = new VoteReceiver("0.0.0.0", 8192);
+        getProxy().getScheduler().runAsync(this, new Runnable() {
+            @Override
+            public void run() {
+                voteReceiver.run();
+            }
+        });
     }
 
     public void onDisable() {
