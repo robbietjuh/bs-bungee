@@ -17,6 +17,7 @@ import net.robbytu.banjoserver.bungee.directsupport.TicketLogoutHandler;
 import net.robbytu.banjoserver.bungee.donate.DonateCommand;
 import net.robbytu.banjoserver.bungee.donate.DonateUtil;
 import net.robbytu.banjoserver.bungee.donate.SmsCommand;
+import net.robbytu.banjoserver.bungee.gamemode.GamemodeCommand;
 import net.robbytu.banjoserver.bungee.kicks.KickCommand;
 import net.robbytu.banjoserver.bungee.list.ListCommand;
 import net.robbytu.banjoserver.bungee.listeners.ChatListener;
@@ -104,6 +105,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new ReplyCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UserLogCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPLogCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new GamemodeCommand());
     }
 
     private void registerListeners() {
