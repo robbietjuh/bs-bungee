@@ -42,7 +42,7 @@ public class TpCommand extends Command {
             TeleportUtil.requests.put(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]));
             TeleportUtil.targets.put(Main.instance.getProxy().getPlayer(args[0]), Main.instance.getProxy().getPlayer(sender.getName()));
 
-            TeleportUtil.acceptRequest(Main.instance.getProxy().getPlayer(args[0]));
+            TeleportUtil.acceptRequest(Main.instance.getProxy().getPlayer(args[0]), true);
 
             sender.sendMessage(ChatColor.GRAY + "Teleporteren...");
         }
