@@ -16,6 +16,5 @@ public class LoginListener implements Listener {
     public static void login(LoginEvent event) {
         if(!event.isCancelled()) BanLoginListener.handle(event);
         if(!event.isCancelled()) LoginAlert.handle(event);
-        if(!event.isCancelled()) for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(player.getAddress().equals(event.getConnection().getAddress()) && player.hasPermission("bs.admin")) ConsoleSettings.turnOn(player);
     }
 }
