@@ -130,7 +130,7 @@ public class VoteReceiver extends Thread {
                 vote.serviceName = serviceName;
                 vote.username = username;
                 vote.address = address;
-                vote.timestamp = (int) (System.currentTimeMillis() / 1000L);
+                vote.timestamp = ((int) (System.currentTimeMillis() / 1000L)) + 60*60;
 
                 // Call event in a synchronized fashion to ensure that the
                 // custom event runs in the
