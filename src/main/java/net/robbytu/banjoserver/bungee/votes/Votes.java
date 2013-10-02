@@ -21,9 +21,11 @@ public class Votes {
             boolean canRedeem = true;
 
             if(result.next()) {
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GREEN + "Bedankt voor het stemmen op de Banjoserver!");
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                if(Main.instance.getProxy().getPlayer(vote.username) != null) {
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GREEN + "Bedankt voor het stemmen op de Banjoserver!");
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                }
                 canRedeem = false;
             }
 
@@ -38,10 +40,12 @@ public class Votes {
             statement.executeUpdate();
 
             if(canRedeem) {
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GREEN + "Bedankt voor het stemmen op de Banjoserver.");
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GRAY + "Type nu " + ChatColor.WHITE + "/vote" + ChatColor.GRAY + " om je beloning te innen!");
-                Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                if(Main.instance.getProxy().getPlayer(vote.username) != null) {
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GREEN + "Bedankt voor het stemmen op de Banjoserver.");
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(ChatColor.GRAY + "Type nu " + ChatColor.WHITE + "/vote" + ChatColor.GRAY + " om je beloning te innen!");
+                    Main.instance.getProxy().getPlayer(vote.username).sendMessage(" ");
+                }
             }
         }
         catch (Exception ignored) {}
