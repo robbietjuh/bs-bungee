@@ -22,7 +22,7 @@ public class ChangePasswordCommand  extends Command {
             return;
         }
 
-        if(AuthProvider.checkPassword(Main.instance.getProxy().getPlayer(sender.getName()), args[0])) {
+        if(!AuthProvider.checkPassword(Main.instance.getProxy().getPlayer(sender.getName()), args[0])) {
             sender.sendMessage(" ");
             sender.sendMessage(ChatColor.RED + "Onjuist oud wachtwoord.");
             sender.sendMessage(ChatColor.GRAY + "Het wachtwoord is niet veranderd.");

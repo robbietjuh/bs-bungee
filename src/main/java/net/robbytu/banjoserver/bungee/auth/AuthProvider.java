@@ -85,8 +85,8 @@ public class AuthProvider {
             String hashed_password = "$SHA$" + salt + "$" + getSHA256(getSHA256(password) + salt);
 
             PreparedStatement statement = conn.prepareStatement("UPDATE bs_auth SET password = ? WHERE username LIKE ?");
-            statement.setString(1, player.getName());
-            statement.setString(2, hashed_password);
+            statement.setString(1, hashed_password);
+            statement.setString(2, player.getName());
             statement.executeUpdate();
 
             return true;
