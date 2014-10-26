@@ -20,15 +20,16 @@ public class SharedChatHandler {
         if(sender == null) return;
 
         String userPrefix = Permissions.getPrefixForUser(sender.getDisplayName());
+        String userMessage = event.getMessage();
 
         for(ServerInfo server : Main.instance.getProxy().getServers().values())
             for(ProxiedPlayer player : server.getPlayers()) {
-                String chatMessage = ChatColor.DARK_GRAY + "[" + server.getName() + "] ";
+                String chatMessage = ChatColor.DARK_GRAY + "[" + sender.getServer().getInfo().getName() + "] ";
 
                 if(server.getName().equals(sender.getServer().getInfo().getName()))
-                    chatMessage += ChatColor.WHITE + "<" + userPrefix + " " + sender.getName() + "> " + ChatColor.WHITE + event.getMessage();
+                    chatMessage += ChatColor.WHITE + "<" + userPrefix + " " + sender.getName() + ChatColor.WHITE + "> " + userMessage;
                 else
-                    chatMessage += ChatColor.GRAY + "<" + ChatColor.stripColor(userPrefix) + " " + sender.getName() + "> " + event.getMessage();
+                    chatMessage += ChatColor.GRAY + ChatColor.stripColor("<" + userPrefix + " " + sender.getName() + "> " + userMessage);
 
                 player.sendMessage(chatMessage);
             }
