@@ -24,6 +24,6 @@ public class ChatListener implements Listener {
                     for(ProxiedPlayer player : server.getPlayers())
                         if(player.getAddress().equals(event.getSender().getAddress()))
                             ConsoleGateway.dispatchLog(server.getName(), player.getName() + ": " + ((event.getMessage().startsWith("/login ")) ? "/login ***" : event.getMessage()));
-        if(!event.isCancelled()) SharedChatHandler.handleChat(event);
+        if(!event.isCancelled() && !event.isCommand()) SharedChatHandler.handleChat(event);
     }
 }
