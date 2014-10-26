@@ -28,7 +28,13 @@ public class MailCommand extends Command {
             sender.sendMessage(ChatColor.GREEN + "Bericht is verstuurd.");
         }
         else if(args.length == 0 || ((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("read"))) {
-            Mail[] mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
+            Mail[] mails = null;
+            if(args[1].matches("-?\\d+"))
+                mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
+            else if(sender.hasPermission("bs.admin"))
+                mails = Mails.getMailForUser(args[1], 0);
+            else
+                this.failCommand(sender, "Invalid arguments.");
 
             if(mails.length == 0) {
                 sender.sendMessage(ChatColor.GRAY + "Geen berichten");
