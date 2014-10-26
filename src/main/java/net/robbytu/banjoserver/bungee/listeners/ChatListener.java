@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.robbytu.banjoserver.bungee.Main;
 import net.robbytu.banjoserver.bungee.auth.AuthChatListener;
+import net.robbytu.banjoserver.bungee.chat.SharedChatHandler;
 import net.robbytu.banjoserver.bungee.consoles.ConsoleGateway;
 import net.robbytu.banjoserver.bungee.directsupport.TicketChatHandler;
 import net.robbytu.banjoserver.bungee.mute.MuteChatListener;
@@ -17,6 +18,7 @@ public class ChatListener implements Listener {
         if(!event.isCancelled()) AuthChatListener.handleChat(event);
         if(!event.isCancelled()) TicketChatHandler.handleChat(event);
         if(!event.isCancelled()) MuteChatListener.handleChat(event);
+        if(!event.isCancelled()) SharedChatHandler.handleChat(event);
         if(!event.isCancelled() && event.isCommand())
             for(ServerInfo server : Main.instance.getProxy().getServers().values())
                 if(server.getAddress().equals(event.getReceiver().getAddress()))
