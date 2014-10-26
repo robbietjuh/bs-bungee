@@ -29,6 +29,8 @@ import net.robbytu.banjoserver.bungee.logger.UserLogCommand;
 import net.robbytu.banjoserver.bungee.mail.MailCheckTask;
 import net.robbytu.banjoserver.bungee.mail.MailCommand;
 import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
+import net.robbytu.banjoserver.bungee.masks.AboutCommand;
+import net.robbytu.banjoserver.bungee.masks.PluginsCommand;
 import net.robbytu.banjoserver.bungee.mute.MuteCommand;
 import net.robbytu.banjoserver.bungee.pm.MsgCommand;
 import net.robbytu.banjoserver.bungee.pm.ReplyCommand;
@@ -39,6 +41,7 @@ import net.robbytu.banjoserver.bungee.tp.TpHereCommand;
 import net.robbytu.banjoserver.bungee.votes.VoteCheckTask;
 import net.robbytu.banjoserver.bungee.votes.VoteReceiver;
 import net.robbytu.banjoserver.bungee.warns.WarnsCommand;
+import net.robbytu.banjoserver.bungee.whois.WhoisCommand;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -114,6 +117,9 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new UserLogCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new IPLogCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new GamemodeCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new AboutCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new PluginsCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new WhoisCommand());
     }
 
     private void registerListeners() {
