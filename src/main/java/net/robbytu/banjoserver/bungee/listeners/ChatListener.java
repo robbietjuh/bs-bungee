@@ -18,12 +18,12 @@ public class ChatListener implements Listener {
         if(!event.isCancelled()) AuthChatListener.handleChat(event);
         if(!event.isCancelled()) TicketChatHandler.handleChat(event);
         if(!event.isCancelled()) MuteChatListener.handleChat(event);
-        if(!event.isCancelled()) SharedChatHandler.handleChat(event);
         if(!event.isCancelled() && event.isCommand())
             for(ServerInfo server : Main.instance.getProxy().getServers().values())
                 if(server.getAddress().equals(event.getReceiver().getAddress()))
                     for(ProxiedPlayer player : server.getPlayers())
                         if(player.getAddress().equals(event.getSender().getAddress()))
                             ConsoleGateway.dispatchLog(server.getName(), player.getName() + ": " + ((event.getMessage().startsWith("/login ")) ? "/login ***" : event.getMessage()));
+        if(!event.isCancelled()) SharedChatHandler.handleChat(event);
     }
 }
