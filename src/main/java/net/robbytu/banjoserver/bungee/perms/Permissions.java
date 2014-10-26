@@ -17,7 +17,7 @@ public class Permissions {
             // Create a new select statement
             PreparedStatement statement = conn.prepareStatement("SELECT `bs_perm_groups`.`prefix` AS `group_name` " +
                                                                 "FROM `bs_perm_groups` " +
-                                                                "INNER JOIN `bs_perm_members` " +
+                                                                "INNER JOIN `bs_perm_members` ON `bs_perm_members`.`group` = `bs_perm_groups`.`id`" +
                                                                 "WHERE bs_perm_members.user LIKE ? " +
                                                                 "LIMIT 1");
             statement.setString(1, user);
