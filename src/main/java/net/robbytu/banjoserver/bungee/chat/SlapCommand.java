@@ -24,11 +24,13 @@ public class SlapCommand extends Command {
         String action = new String[] { "een keiharde klap op z'n bakkes",
                                        "een bitch slap",
                                        "een wedgie",
-                                       "ebola" }[new Random().nextInt(4)];
+                                       "ebola",
+                                       "een stinkende oude sok",
+                                       "een dode capibara",
+                                       "een trap in z'n ballen",
+                                       "een vergiftigt blikje Shultenbrau" }[new Random().nextInt(8)];
 
-
-        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
+        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers())
             player.sendMessage(ChatColor.YELLOW + " * " + sender.getName() + " gaf " + args[0] + " " + action + " <3");
-        }
     }
 }
