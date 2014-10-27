@@ -40,17 +40,19 @@ public class TeleportUtil {
         ProxiedPlayer sender = targets.get(target);
         if(sender == null) return false;
 
-        if(timings.get(target) != null) {
-            if(timings.get(target) > (int) (System.currentTimeMillis() / 1000L)) {
-                sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
-                return false;
+        if(!asAdmin) {
+            if(timings.get(target) != null) {
+                if(timings.get(target) > (int) (System.currentTimeMillis() / 1000L)) {
+                    sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
+                    return false;
+                }
             }
-        }
 
-        if(timings.get(sender) != null) {
-            if(timings.get(sender) > (int) (System.currentTimeMillis() / 1000L)) {
-                sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
-                return false;
+            if(timings.get(sender) != null) {
+                if(timings.get(sender) > (int) (System.currentTimeMillis() / 1000L)) {
+                    sender.sendMessage(ChatColor.GRAY + "Er is een cooldown van toepassing. Probeer het over een paar seconden nogmaals.");
+                    return false;
+                }
             }
         }
 
@@ -64,8 +66,10 @@ public class TeleportUtil {
 
         PluginMessager.sendMessage(target.getServer(), "teleport", sender.getName(), target.getName());
 
-        timings.put(target, (int) (System.currentTimeMillis() / 1000L) + 3);
-        timings.put(sender, (int) (System.currentTimeMillis() / 1000L) + 3);
+        if(!asAdmin) {
+            timings.put(target, (int) (System.currentTimeMillis() / 1000L) + 3);
+            timings.put(sender, (int) (System.currentTimeMillis() / 1000L) + 3);
+        }
 
         return true;
     }
