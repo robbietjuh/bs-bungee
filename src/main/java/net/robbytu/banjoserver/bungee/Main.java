@@ -32,6 +32,7 @@ import net.robbytu.banjoserver.bungee.mail.MailLoginHandler;
 import net.robbytu.banjoserver.bungee.masks.AboutCommand;
 import net.robbytu.banjoserver.bungee.masks.PluginsCommand;
 import net.robbytu.banjoserver.bungee.mute.MuteCommand;
+import net.robbytu.banjoserver.bungee.perms.PermsCommand;
 import net.robbytu.banjoserver.bungee.pm.MsgCommand;
 import net.robbytu.banjoserver.bungee.pm.ReplyCommand;
 import net.robbytu.banjoserver.bungee.tp.TpAcceptCommand;
@@ -120,6 +121,7 @@ public class Main extends Plugin {
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new AboutCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PluginsCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new WhoisCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new PermsCommand());
     }
 
     private void registerListeners() {
@@ -147,7 +149,7 @@ public class Main extends Plugin {
     }
 
     private void startVoteReceiver() {
-        this.voteReceiver = new VoteReceiver("0.0.0.0", 8192);
+        Main.voteReceiver = new VoteReceiver("0.0.0.0", 8192);
         getProxy().getScheduler().runAsync(this, new Runnable() {
             @Override
             public void run() {
