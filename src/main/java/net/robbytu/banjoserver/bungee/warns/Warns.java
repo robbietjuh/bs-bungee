@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.warns;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class Warns {
             statement.executeUpdate();
 
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
-                if(player.hasPermission("bs.admin")) {
+                if(Permissions.hasPermission(player.getName(), "bs.bungee.warns.receive_broadcast")) {
                     player.sendMessage("");
                     player.sendMessage(ChatColor.GOLD + warn.mod + " heeft " + warn.username + " een warn gegeven in " + warn.server + ":");
                     player.sendMessage(ChatColor.GOLD + " * " + warn.warn);

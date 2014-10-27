@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.bans;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class BanCommand extends Command {
     private final String usage = "/ban [user] [reason]";
@@ -13,13 +14,18 @@ public class BanCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.ban")) {
             this.failCommand(sender, "You do not have permission to execute this command.");
             return;
         }
 
         if(args.length < 2) {
             this.failCommand(sender, "Missing arguments.");
+            return;
+        }
+
+        if(Permissions.hasPermission(args[0], "bs.bungee.ban")) {
+            this.failCommand(sender, "You cannot ban this user.");
             return;
         }
 

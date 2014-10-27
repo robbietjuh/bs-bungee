@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.mail;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class MailCommand extends Command {
     private final String usage = "/mail [send/read/clear] [user/page] [message]";
@@ -31,7 +32,7 @@ public class MailCommand extends Command {
             Mail[] mails = null;
             if(args.length == 1 || (args.length ==2 && args[1].matches("-?\\d+")))
                 mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
-            else if(sender.hasPermission("bs.admin"))
+            else if(Permissions.hasPermission(sender.getName(), "bs.bungee.mail.snoop"))
                 mails = Mails.getMailForUser(args[1], 0);
             else
                 this.failCommand(sender, "Invalid arguments.");

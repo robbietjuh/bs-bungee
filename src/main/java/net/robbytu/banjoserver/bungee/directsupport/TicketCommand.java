@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class TicketCommand extends Command {
     private final String usage = "/ticket [accept/next/list/close] [id]";
@@ -25,7 +26,7 @@ public class TicketCommand extends Command {
                 return;
             }
 
-            if(!sender.hasPermission("bs.admin") && !sender.hasPermission("bs.helper")) {
+            if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tickets.help")) {
                 this.failCommand(sender, "You're not allowed to accept tickets.");
                 return;
             }
@@ -49,7 +50,7 @@ public class TicketCommand extends Command {
             this.acceptTicket(sender, ticket);
         }
         else if(args[0].equalsIgnoreCase("next")) {
-            if(!sender.hasPermission("bs.admin") && !sender.hasPermission("bs.helper")) {
+            if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tickets.help")) {
                 this.failCommand(sender, "You're not allowed to accept tickets.");
                 return;
             }
@@ -78,7 +79,7 @@ public class TicketCommand extends Command {
             sender.sendMessage(" ");
             sender.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
             for(Ticket ticket : tickets) sender.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ((ticket.question.length() > 40) ? ticket.question.substring(0, 40) : ticket.question));
-            if(sender.hasPermission("bs.admin") || sender.hasPermission("bs.helper")) sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
+            if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tickets.help")) sender.sendMessage(ChatColor.GRAY + "Je kan tickets accepteren met /ticket accept [id]");
             sender.sendMessage(" ");
         }
         else if(args[0].equalsIgnoreCase("close") || args[0].equalsIgnoreCase("leave")) {

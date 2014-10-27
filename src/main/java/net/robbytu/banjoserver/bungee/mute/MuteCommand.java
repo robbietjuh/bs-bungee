@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.mute;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class MuteCommand extends Command {
     private final String usage = "/mute [user]";
@@ -13,7 +14,7 @@ public class MuteCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.mute")) {
             this.failCommand(sender, "You do not have permission to execute this command.");
             return;
         }
@@ -22,6 +23,11 @@ public class MuteCommand extends Command {
             this.failCommand(sender, "Please specify the user to mute.");
             return;
         }
+
+//        if(Permissions.hasPermission(args[0], "bs.bungee.mute")) {
+//            this.failCommand(sender, "You cannot mute this user.");
+//            return;
+//        }
 
         if(MuteUtil.isMuted(args[0])) {
             MuteUtil.unmute(args[0]);

@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.bans;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class TempBanCommand extends Command {
     private final String usage = "/tempban [user] [time in sec.] [reason]";
@@ -13,13 +14,18 @@ public class TempBanCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tempban")) {
             this.failCommand(sender, "You do not have permission to execute this command.");
             return;
         }
 
         if(args.length < 3) {
             this.failCommand(sender, "Missing arguments.");
+            return;
+        }
+
+        if(Permissions.hasPermission(args[0], "bs.bungee.tempban")) {
+            this.failCommand(sender, "You cannot ban this user.");
             return;
         }
 

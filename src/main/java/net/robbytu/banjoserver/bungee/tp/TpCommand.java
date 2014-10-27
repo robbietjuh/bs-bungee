@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class TpCommand extends Command {
     private final String usage = "/tp [user]";
@@ -34,7 +35,7 @@ public class TpCommand extends Command {
             return;
         }
 
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tp.instantly")) {
             TeleportUtil.requestTeleport(Main.instance.getProxy().getPlayer(sender.getName()), Main.instance.getProxy().getPlayer(args[0]));
             sender.sendMessage(ChatColor.GRAY + "Er is een verzoek verstuurd naar " + args[0] + "...");
         }

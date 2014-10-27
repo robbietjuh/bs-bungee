@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.bans;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class Bans {
             kickBannedPlayer(ban);
 
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
-                if(player.hasPermission("bs.admin")) {
+                if(Permissions.hasPermission(player.getName(), "bs.bungee.ban.receive_broadcast")) {
                     player.sendMessage("");
                     player.sendMessage(ChatColor.RED + ban.mod + " heeft " + ban.username + " gebanned:");
                     player.sendMessage(ChatColor.RED + " * " + ban.reason);
@@ -102,7 +103,7 @@ public class Bans {
                 kickBannedPlayer(ban);
 
                 for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
-                    if(player.hasPermission("bs.admin")) {
+                    if(Permissions.hasPermission(player.getName(), "bs.admin")) {
                         player.sendMessage("");
                         player.sendMessage(ChatColor.RED + ban.mod + " heeft " + ban.username + " gebanned:");
                         player.sendMessage(ChatColor.RED + " * " + ban.reason);

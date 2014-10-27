@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ public class IPLogCommand extends Command {
             return;
         }
 
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.iplog")) {
             this.failCommand(sender, "You don't have enough permissions to execute this command.");
             return;
         }
@@ -39,7 +40,7 @@ public class IPLogCommand extends Command {
             sender.sendMessage(" ");
             sender.sendMessage(ChatColor.YELLOW + "Volgende users zijn ingelogd geweest op " + args[0]);
             while(result.next()) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ii");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
                 String date = sdf.format(result.getInt(1));
 
                 sender.sendMessage(ChatColor.GRAY + " * " + ChatColor.WHITE + result.getString(1) + ChatColor.GRAY + " (laatste login " + date + ")");
@@ -47,6 +48,7 @@ public class IPLogCommand extends Command {
             sender.sendMessage(" ");
         }
         catch(Exception ignored) {
+            ignored.printStackTrace();
             sender.sendMessage(ChatColor.RED + "Informatie kon niet worden opgehaald. Databasefout.");
         }
     }

@@ -7,6 +7,7 @@ import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
 import net.robbytu.banjoserver.bungee.bans.Ban;
 import net.robbytu.banjoserver.bungee.bans.Bans;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class WarnsCommand extends Command {
     private final String usage = "/warns [user/add [user] [warn ...]/remove [id]]";
@@ -39,7 +40,7 @@ public class WarnsCommand extends Command {
 
         if(args.length >= 3 && args[0].equalsIgnoreCase("add")) {
             // Add a user warn
-            if(!sender.hasPermission("bs.admin")) {
+            if(!Permissions.hasPermission(sender.getName(), "bs.bungee.warns.warn")) {
                 this.failCommand(sender, "You do not have permission to execute this command.");
                 return;
             }
@@ -79,7 +80,7 @@ public class WarnsCommand extends Command {
 
         if(args.length == 2 && args[0].equalsIgnoreCase("remove")) {
             // Remove a user warn
-            if(!sender.hasPermission("bs.admin")) {
+            if(!Permissions.hasPermission(sender.getName(), "bs.bungee.warns.remove")) {
                 this.failCommand(sender, "You do not have permission to execute this command.");
                 return;
             }

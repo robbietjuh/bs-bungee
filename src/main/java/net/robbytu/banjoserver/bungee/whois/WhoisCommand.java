@@ -8,6 +8,7 @@ import net.robbytu.banjoserver.bungee.Main;
 import net.robbytu.banjoserver.bungee.auth.AuthProvider;
 import net.robbytu.banjoserver.bungee.directsupport.Tickets;
 import net.robbytu.banjoserver.bungee.mute.MuteUtil;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.util.Arrays;
 
@@ -20,7 +21,7 @@ public class WhoisCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.whois")) {
             this.failCommand(sender, "You do not have permission to execute this command.");
             return;
         }
@@ -39,17 +40,15 @@ public class WhoisCommand extends Command {
         String mutedStatus = ChatColor.RED + "-";
         String ticketStatus = ChatColor.RED + "-";
 
-        if(player == null) {
-            sender.sendMessage(ChatColor.YELLOW + " * Warning: " + args[0] + " is offline." +
-                    "Using database provided information.");
-            sender.sendMessage(" ");
-        }
+        if(player == null) sender.sendMessage(ChatColor.YELLOW + " * Warning: " + args[0] + " is offline.");
         else {
+            sender.sendMessage(ChatColor.YELLOW + "About " + args[0]);
+
             authStatus = (AuthProvider.isAuthenticated(player)) ?
                     ChatColor.GREEN + "Authenticated" :
                     ChatColor.RED + "Not authenticated";
 
-            ipAddress = ChatColor.WHITE + "" + Arrays.toString(player.getAddress().getAddress().getAddress());
+            ipAddress = ChatColor.WHITE + "" + player.getAddress().getAddress().toString();
 
             serverName = ChatColor.WHITE + "" + player.getServer().getInfo().getName();
 
@@ -62,15 +61,15 @@ public class WhoisCommand extends Command {
                     "Public chat";
         }
 
-        sender.sendMessage(ChatColor.YELLOW + "About " + args[0]);
-        sender.sendMessage(ChatColor.GRAY + " * Auth status: " + authStatus);
-        sender.sendMessage(ChatColor.GRAY + " * IP address:  " + ipAddress);
-        sender.sendMessage(ChatColor.GRAY + " * Server:      " + serverName);
-        sender.sendMessage(ChatColor.GRAY + " * Muted:       " + mutedStatus);
-        sender.sendMessage(ChatColor.GRAY + " * Chat:        " + ticketStatus);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "Auth status: " + authStatus);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "IP address:  " + ipAddress);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "Server:       " + serverName);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "Muted:         " + mutedStatus);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "Chat:           " + ticketStatus);
         sender.sendMessage(" ");
-        sender.sendMessage(ChatColor.DARK_GRAY + "Further information might be collected through:");
-        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/iplog " + args[0]);
+        sender.sendMessage(ChatColor.YELLOW + "Further information might be collected through:");
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/users-for-ip " + ipAddress);
+        sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/ips-for-user " + args[0]);
         sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/warns " + args[0]);
         sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/perms " + args[0]); /* TODO */
         sender.sendMessage(ChatColor.DARK_GRAY + " * " + ChatColor.GRAY + "/votes " + args[0]); /* TODO */

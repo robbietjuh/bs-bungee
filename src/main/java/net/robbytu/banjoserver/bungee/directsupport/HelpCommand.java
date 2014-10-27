@@ -5,6 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class HelpCommand extends Command {
     private final String usage = "/help [vraag]";
@@ -26,7 +27,7 @@ public class HelpCommand extends Command {
         }
 
         boolean adminsOnline = false;
-        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(player.hasPermission("bs.admin")) adminsOnline = true;
+        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(Permissions.hasPermission(player.getName(), "bs.bungee.tickets.receive_broadcast")) adminsOnline = true;
 
         if(!adminsOnline) {
             sender.sendMessage(ChatColor.RED + "Er zijn op dit moment geen admins online om je te helpen. Probeer het later nog eens.");
@@ -46,7 +47,7 @@ public class HelpCommand extends Command {
 
         Tickets.createTicket(ticket);
 
-        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(player.hasPermission("bs.admin")) player.sendMessage(ChatColor.AQUA + ticket.username + " heeft een ticket aangemaakt: " + ticket.question);
+        for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) if(Permissions.hasPermission(player.getName(), "bs.bungee.tickets.receive_broadcast")) player.sendMessage(ChatColor.AQUA + ticket.username + " heeft een ticket aangemaakt: " + ticket.question);
 
         sender.sendMessage(ChatColor.GREEN + "Je ticket is aangemaakt. Je wordt zo snel mogelijk geholpen!");
     }

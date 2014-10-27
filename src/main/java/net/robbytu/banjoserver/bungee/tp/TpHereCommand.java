@@ -4,6 +4,7 @@ import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class TpHereCommand extends Command {
     private final String usage = "/tphere [user]";
@@ -29,7 +30,7 @@ public class TpHereCommand extends Command {
             return;
         }
 
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.tphere")) {
             sender.sendMessage(ChatColor.GRAY + "Je hebt geen permissies om deze actie uit te voeren.");
         }
         else {

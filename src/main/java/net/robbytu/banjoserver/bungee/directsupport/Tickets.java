@@ -3,6 +3,7 @@ package net.robbytu.banjoserver.bungee.directsupport;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -183,7 +184,7 @@ public class Tickets {
         Ticket[] tickets = getOpenTickets();
         if (tickets.length > 0) {
             for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
-                if(player.hasPermission("bs.admin") || player.hasPermission("bs.helper")) {
+                if(Permissions.hasPermission(player.getName(), "bs.bungee.tickets.receive_broadcast")) {
                     player.sendMessage(" ");
                     player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "Er zijn " + tickets.length + " open tickets.");
                     for(Ticket ticket : tickets) player.sendMessage(ChatColor.GOLD + "  #" + ticket.id + ": " + ((ticket.question.length() > 40) ? ticket.question.substring(0, 40) : ticket.question));

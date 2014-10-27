@@ -5,6 +5,7 @@ import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import net.robbytu.banjoserver.bungee.Main;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 public class IPBanCommand extends Command {
     private final String usage = "/ipban [user/ip] [reason]";
@@ -15,7 +16,7 @@ public class IPBanCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(!sender.hasPermission("bs.admin")) {
+        if(!Permissions.hasPermission(sender.getName(), "bs.bungee.ipban")) {
             this.failCommand(sender, "You do not have permission to execute this command.");
             return;
         }
