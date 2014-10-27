@@ -24,7 +24,7 @@ public class SlapCommand extends Command {
         String action = new String[] { "een keiharde klap op z'n bakkes",
                                        "een bitch slap",
                                        "een wedgie",
-                                       "ebola" }[new Random().nextInt(3)];
+                                       "ebola" }[new Random().nextInt(4)];
 
 
         for(ProxiedPlayer player : Main.instance.getProxy().getPlayers()) {
