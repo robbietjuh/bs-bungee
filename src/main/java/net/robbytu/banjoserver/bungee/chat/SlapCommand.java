@@ -19,6 +19,8 @@ public class SlapCommand extends Command {
     public void execute(CommandSender sender, String[] args) {
         if(MuteUtil.isMuted(sender.getName())) return;
 
+        if(args.length == 0) return;
+
         String action = new String[] { "een keiharde klap op z'n bakkes",
                                        "een bitch slap",
                                        "een wedgie",
