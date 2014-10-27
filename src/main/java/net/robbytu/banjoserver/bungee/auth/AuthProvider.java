@@ -3,6 +3,8 @@ package net.robbytu.banjoserver.bungee.auth;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.robbytu.banjoserver.bungee.Main;
 import net.robbytu.banjoserver.bungee.PluginMessager;
+import net.robbytu.banjoserver.bungee.consoles.ConsoleSettings;
+import net.robbytu.banjoserver.bungee.perms.Permissions;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -49,6 +51,8 @@ public class AuthProvider {
         if(checkPassword(player, providedPassword)) {
             authenticatedUsers.add(player);
             PluginMessager.sendMessage(player.getServer(), "PlayerAuthInfo", player.getName(), "authenticated");
+
+            if(Permissions.hasPermission(player.getName(), "bs.bungee.console")) ConsoleSettings.turnOn(player);
             return true;
         }
         return false;
