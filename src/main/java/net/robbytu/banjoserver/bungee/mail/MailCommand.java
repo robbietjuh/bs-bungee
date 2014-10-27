@@ -29,7 +29,7 @@ public class MailCommand extends Command {
         }
         else if(args.length == 0 || ((args.length == 1 || args.length == 2) && args[0].equalsIgnoreCase("read"))) {
             Mail[] mails = null;
-            if(args[1].matches("-?\\d+"))
+            if(args.length == 1 || (args.length ==2 && args[1].matches("-?\\d+")))
                 mails = Mails.getMailForUser(sender.getName(), ((args.length == 2) ? Integer.parseInt(args[1]) : 0));
             else if(sender.hasPermission("bs.admin"))
                 mails = Mails.getMailForUser(args[1], 0);
